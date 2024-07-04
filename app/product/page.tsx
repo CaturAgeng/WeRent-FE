@@ -1,4 +1,6 @@
 import Image from "@/node_modules/next/image";
+import StarRating from "./StarRating/StarRating";
+
 
 export default function Page() {
     return (
@@ -21,7 +23,8 @@ export default function Page() {
                 
                 {/* Product Review Rating */}
                 <div className="flex flex-row w-full gap-6 py-4 items-center">
-                    <h1>Star Rating</h1>
+                    <StarRating />
+                    {/* <h1>Star Rating</h1> */}
                     <p className="text-xs text-gray-500">7 REVIEWS</p>
                 </div>
 
@@ -39,7 +42,7 @@ export default function Page() {
                 {/* Designer Banner */}
                 <div className="flex flex-row w-full justify-between my-2">
                     <h1 className="text-xs font-bold">DESIGNERS</h1>
-                    <p className="text-xs">VIEW THE COLLECTION</p>
+                    <span className="text-xs">VIEW THE COLLECTION</span>
                 </div>
                 <Image className="mb-2"
                     src="/dummy/designerBanner.png"
