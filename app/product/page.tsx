@@ -1,7 +1,6 @@
 import Image from "@/node_modules/next/image";
 import StarRating from "./StarRating/StarRating";
 
-
 export default function Page() {
     return (
         <div className="flex items-center justify-start h-screen flex-col">
