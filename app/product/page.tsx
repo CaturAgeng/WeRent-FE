@@ -1,5 +1,7 @@
 import Image from "@/node_modules/next/image";
-import StarRating from "./StarRating/StarRating";
+import StarRating from "./components/StarRating/StarRating";
+import ProductSize from "./components/ProducSize/ProductSize";
+import ProductSizeDetail from "./components/ProductSizeDetail/ProductSizeDetail";
 
 export default function Page() {
     return (
@@ -21,17 +23,11 @@ export default function Page() {
                 {/* <h1 className="text-2xl font-semibold mt-2">{product.name}</h1> */}
                 
                 {/* Product Review Rating */}
-                <div className="flex flex-row w-full gap-6 py-4 items-center">
-                    <StarRating />
-                    {/* <h1>Star Rating</h1> */}
-                    <p className="text-xs text-gray-500">7 REVIEWS</p>
-                </div>
-
+                <StarRating review={10}
+                />
+                
                 {/* Product Size & Guide */}
-                <div className="flex flex-row w-full justify-between">
-                    <p className="text-xs">M</p>
-                    <p className="text-xs">VIEW SIZE GUIDE</p>
-                </div>
+                <ProductSize />
             </div>
 
             {/* PRODUCT DESIGNER */}
@@ -63,7 +59,7 @@ export default function Page() {
                     <p className="text-xs text-gray-500">SILK</p>
                 </div>
 
-                {/* Product Size */}
+                {/* Product Material */}
                 <div className="flex flex-row w-full justify-between my-1">
                     <h1 className="text-xs font-bold">FIT</h1>
                     <p className="text-xs text-gray-500">TRUE TO SIZE</p>
@@ -72,18 +68,22 @@ export default function Page() {
                 {/* Size Guide */}
                 <div className="flex flex-col w-full justify-between my-1">
                     <h1 className="text-xs font-bold mb-1">SIZE GUIDE</h1>
-                    <div className="flex flex-auto w-full justify-evenly py-2 border border-gray-500">
+                    <div className="flex flex-auto w-full justify-evenly py-2 border-t border-x border-b-2 border-gray-500">
                         <p className="text-xs w-1/3 font-bold text-center">SIZE</p>
                         <p className="text-xs w-1/3 font-bold text-center">BUST</p>
                         <p className="text-xs w-1/3 font-bold text-center">LENGTH</p>
                     </div>
 
                     {/* Product Detail Here */}
-                    <div className="flex flex-auto w-full justify-evenly py-2 border border-gray-500">
-                        <p className="text-xs w-1/3 font-bold text-center">M</p>
-                        <p className="text-xs w-1/3 font-bold text-center">78 cm</p>
-                        <p className="text-xs w-1/3 font-bold text-center">89 cm</p>
-                    </div>
+                    <ProductSizeDetail
+                        sizes={[
+                            {size: "XS", bustSize: "74", lengthSize: "87"},
+                            {size: "S", bustSize: "76", lengthSize: "88"},
+                            {size: "M", bustSize: "78", lengthSize: "89"},
+                            {size: "L", bustSize: "80", lengthSize: "90"},
+                            {size: "XL", bustSize: "82", lengthSize: "91"},
+                        ]}
+                    />
                 </div>
             </div>
         </div>
