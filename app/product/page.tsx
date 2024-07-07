@@ -1,90 +1,51 @@
-import Image from "@/node_modules/next/image";
-import StarRating from "./components/StarRating/StarRating";
-import ProductSize from "./components/ProducSize/ProductSize";
-import ProductSizeDetail from "./components/ProductSizeDetail/ProductSizeDetail";
+
 
 export default function Page() {
     return (
-        <div className="flex items-center justify-start h-screen flex-col">
+        <div className="w-screen h-screen flex flex-col items-center justify-between">
             
-            {/* PRODUCT IMAGE */}
-            <Image 
-                src="/dummy/contohAbaya.png"
-                width="1000"
-                height="1000"
-                alt="contoh abaya"
-            />
-
-            {/* PRODUCT NAME & GUIDE */}
-            <div className="flex flex-col items-start w-screen pt-2 px-8">
-                
-                {/* Product Name */}
-                <h1 className="text-2xl font-semibold mt-2">Black Kaftan with Embellishment</h1>
-                {/* <h1 className="text-2xl font-semibold mt-2">{product.name}</h1> */}
-                
-                {/* Product Review Rating */}
-                <StarRating review={10}
-                />
-                
-                {/* Product Size & Guide */}
-                <ProductSize />
-            </div>
-
-            {/* PRODUCT DESIGNER */}
-            <div className="flex flex-col items-start w-screen py-2 px-8">
-                <div className="bg-gray-500 w-full h-0.5 mt-1"></div>
-                
-                {/* Designer Banner */}
-                <div className="flex flex-row w-full justify-between my-2">
-                    <h1 className="text-xs font-bold">DESIGNERS</h1>
-                    <span className="text-xs">VIEW THE COLLECTION</span>
-                </div>
-                <Image className="mb-2"
-                    src="/dummy/designerBanner.png"
-                    width="1000"
-                    height="1000"
-                    alt="designer banner"
-                />
-            </div>
-
-            {/* PRODUCT DETAIL & SIZE GUIDE */}
-            <div className="flex flex-col items-start w-screen py-2 px-8">
-                <div className="bg-gray-500 w-full h-0.5 my-1"></div>
-                
-                <h1 className="text-s font-bold">PRODUCT DETAIL</h1>
-
-                {/* Product Material */}
-                <div className="flex flex-row w-full justify-between my-1">
-                    <h1 className="text-xs font-bold">FABRIC</h1>
-                    <p className="text-xs text-gray-500">SILK</p>
-                </div>
-
-                {/* Product Material */}
-                <div className="flex flex-row w-full justify-between my-1">
-                    <h1 className="text-xs font-bold">FIT</h1>
-                    <p className="text-xs text-gray-500">TRUE TO SIZE</p>
-                </div>
-
-                {/* Size Guide */}
-                <div className="flex flex-col w-full justify-between my-1">
-                    <h1 className="text-xs font-bold mb-1">SIZE GUIDE</h1>
-                    <div className="flex flex-auto w-full justify-evenly py-2 border-t border-x border-b-2 border-gray-500">
-                        <p className="text-xs w-1/3 font-bold text-center">SIZE</p>
-                        <p className="text-xs w-1/3 font-bold text-center">BUST</p>
-                        <p className="text-xs w-1/3 font-bold text-center">LENGTH</p>
+            {/* TOP NAVIGATION */}
+            <div className="w-full h-24 flex-col bg-white drop-shadow-md ">
+                <div className="w-screen h-1/3 "></div>
+                <div className="w-screen h-2/3 p-4 flex flex-row justify-start items-center">
+                    <div className="rounded-full w-8 h-8 flex items-center cursor-pointer justify-center hover:bg-gray-300">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            stroke="currentColor"
+                            className="w-6 h-6"
+                        >
+                            <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M15 19l-7-7 7-7"
+                            />
+                        </svg>
                     </div>
-
-                    {/* Product Detail Here */}
-                    <ProductSizeDetail
-                        sizes={[
-                            {size: "XS", bustSize: "74", lengthSize: "87"},
-                            {size: "S", bustSize: "76", lengthSize: "88"},
-                            {size: "M", bustSize: "78", lengthSize: "89"},
-                            {size: "L", bustSize: "80", lengthSize: "90"},
-                            {size: "XL", bustSize: "82", lengthSize: "91"},
-                        ]}
-                    />
+                    <a className="text-black">Back Button</a>
                 </div>
+            </div>
+            
+            <h1>View Product Page</h1>
+            <p>hello</p>
+
+            {/* BOTTOM NAVIGATION */}
+            <div className="w-full h-24 flex-col bg-white border-t-2">
+                <div className="w-screen h-2/3 py-2 px-4 flex flex-row justify-between items-center">
+                    <div className=" h-full flex flex-col items-start cursor-pointer justify-center">
+                        <div className="h-1/4 flex items-center">
+                            <p className="text-xs">Rent Fee</p>
+                        </div>
+                        <div className="h-2/4 flex items-center">
+                            <h1>Rp 300.000/4 Day</h1>
+                        </div>
+                        <div className="h-1/4 items-center"></div>
+                    </div>
+                    <button className="rounded-md h-9 w-32 bg-yellow-500 text-xs cursor-pointer hover:bg-yellow-600">ADD</button>
+                </div>
+                <div className="w-screen h-1/3 "></div>
             </div>
         </div>
     );
