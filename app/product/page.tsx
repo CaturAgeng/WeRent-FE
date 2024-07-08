@@ -1,4 +1,4 @@
-import Image from "@/node_modules/next/image";
+import Image from "next/image";
 import StarRating from "./components/StarRating/StarRating";
 import ProductSize from "./components/ProducSize/ProductSize";
 import ProductSizeDetail from "./components/ProductSizeDetail/ProductSizeDetail";
