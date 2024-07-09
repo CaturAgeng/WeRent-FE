@@ -49,30 +49,31 @@ export function RegisterForm() {
 
     const payload = {
       username: username!.toString(),
-      password: password!.toString(),
-      email: email!.toString()
+      email: email!.toString(),
+      password: password!.toString()
     }
+    console.log(payload)
     
     mutate(payload)
   }
 
   return (
     <Card className="space-y-2 shadow-lg p-5 rounded-lg">
-      <form onSubmit={registerHandler} className="space-y-2">
+      <form onSubmit={registerHandler} className="space-y-2" data-cy="register-form">
         <div className="flex justify-center">
-        <Image
-          src="/dummy/19.png"
-          width={200}
-          height={100}
-          alt="WeRent Logo"
-          className="object-center"
-        />
+          <Image
+            src="/dummy/19.png"
+            width={200}
+            height={100}
+            alt="WeRent Logo"
+            className="object-center"
+          />
         </div>
         
         <p className="text-center text-xl mb-2">Register Form</p>
-        <Input label="E-mail" name="email"/>
+        <Input label="E-mail" name="email" data-cy="email-input"/>
 
-        <Input label="Username" name="username"/>
+        <Input label="Username" name="username" data-cy="username-input"/>
 
         <Input
           label="Password"
@@ -80,6 +81,7 @@ export function RegisterForm() {
           rightNode={showPassword ? <EyeCloseIcon /> : <EyeOpenIcon />}
           rightNodeClick={() => showPasswordHandler(setShowPassword)}
           name="password"
+          data-cy="password-input"
         />
 
         <Input
@@ -88,16 +90,21 @@ export function RegisterForm() {
           type={confirmShowPassword ? "text" : "password"}
           rightNode={confirmShowPassword ? <EyeCloseIcon /> : <EyeOpenIcon />}
           rightNodeClick={() => showPasswordHandler(setConfirmShowPassword)}
+          data-cy="confirm-password-input"
         />
 
-        <Button type="submit" className="bg-custom-blue text-white hover:bg-white hover:text-custom-blue font-bold py-2 px-4 rounded border border-custom-blue">
+        <Button
+          type="submit"
+          className="bg-custom-blue text-white hover:bg-white hover:text-custom-blue font-bold py-2 px-4 rounded border border-custom-blue"
+          data-cy="register-button"
+          >
           Register
         </Button>
       </form>
       
 
       <p className="text-center text-xs">
-        Already have an account? <a href="">Login</a>
+        Already have an account? <a href="/login">Login</a>
       </p>
     </Card>
   );
