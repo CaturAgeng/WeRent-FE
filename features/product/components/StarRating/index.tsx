@@ -4,9 +4,10 @@ import React from "react";
 
 interface StarRatingProps {
     review: number;
+    rate: number;
 }
 
-export default function StarRating({ review }: StarRatingProps) {
+export default function StarRating({ review, rate }: StarRatingProps) {
     
     return (
         <div className="flex flex-row w-full gap-6 py-4 items-center">
@@ -16,11 +17,11 @@ export default function StarRating({ review }: StarRatingProps) {
                             <svg
                             key={index}
                             xmlns="http://www.w3.org/2000/svg" 
-                            fill={index < 4 ? "currentColor" : "none"} 
+                            fill={index < rate ? "currentColor" : "none"} 
                             viewBox="0 0 24 24" 
                             stroke-width="1.5" 
                             stroke="currentColor"
-                            className={`w-6 h-6 cursor-pointer ${index < 4 ? 'text-yellow-500' : 'text-gray-300'}`}
+                            className={`w-6 h-6 cursor-pointer ${index < rate ? 'text-yellow-500' : 'text-gray-300'}`}
                             >
                                 <path 
                                 stroke-linecap="round" 

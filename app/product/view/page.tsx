@@ -21,7 +21,7 @@ export default function View() {
                 {/* <h1 className="text-2xl font-semibold mt-2">{product.name}</h1> */}
                 
                 {/* Product Review Rating */}
-                <StarRating review={4}
+                <StarRating review={4} rate={4}
                 />
                 
                 {/* Product Size & Guide */}
