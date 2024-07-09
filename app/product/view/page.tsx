@@ -1,9 +1,9 @@
 import Image from "@/node_modules/next/image";
 import { StarRating, ProductSize, ProductSizeDetail  } from '@/features/product/components'
 
-export default function Page() {
+export default function View() {
     return (
-        <div className="flex items-center justify-start h-screen flex-col">
+        <div className="flex items-center justify-start h-screen flex-col overflow-hidden">
             
             {/* PRODUCT IMAGE */}
             <Image 
@@ -21,7 +21,7 @@ export default function Page() {
                 {/* <h1 className="text-2xl font-semibold mt-2">{product.name}</h1> */}
                 
                 {/* Product Review Rating */}
-                <StarRating review={10}
+                <StarRating review={4}
                 />
                 
                 {/* Product Size & Guide */}
