@@ -2,6 +2,8 @@ import Image from "@/node_modules/next/image";
 import { StarRating, ProductSize, ProductSizeDetail  } from '@/features/product/components'
 
 export default function View() {
+    const sizes=["XS", "S", "M", "L", "XL"];
+
     return (
         <div className="flex items-center justify-start h-screen flex-col overflow-hidden">
             
@@ -25,7 +27,7 @@ export default function View() {
                 />
                 
                 {/* Product Size & Guide */}
-                <ProductSize />
+                <ProductSize sizes={sizes} />
             </div>
 
             {/* PRODUCT DESIGNER */}
