@@ -1,5 +1,5 @@
 import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { Card, Input, Button } from "@/app/features/base";
+import { Card, Input, Button } from "../../../base";
 
 
 export function RegisterForm() {
@@ -22,7 +22,7 @@ export function RegisterForm() {
         <Input
           label="Password"
           type={showPassword ? "text" : "password"}
-          rightNode={showPassword ? <EyeCloseIcon /> : <EyeOpenIcon />}
+          // rightNode={showPassword ? <EyeCloseIcon /> : <EyeOpenIcon />}
           rightNodeClick={() => showPasswordHandler(setShowPassword)}
           name="password"
         />
@@ -31,7 +31,7 @@ export function RegisterForm() {
           name="confirm_password"
           label="Confirm Password"
           type={confirmShowPassword ? "text" : "password"}
-          rightNode={confirmShowPassword ? <EyeCloseIcon /> : <EyeOpenIcon />}
+          // rightNode={confirmShowPassword ? <EyeCloseIcon /> : <EyeOpenIcon />}
           rightNodeClick={() => showPasswordHandler(setConfirmShowPassword)}
         />
 

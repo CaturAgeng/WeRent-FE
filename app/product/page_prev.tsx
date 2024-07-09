@@ -1,7 +1,5 @@
 import Image from "@/node_modules/next/image";
-import StarRating from "./components/StarRating/StarRating";
-import ProductSize from "./components/ProducSize/ProductSize";
-import ProductSizeDetail from "./components/ProductSizeDetail/ProductSizeDetail";
+import { StarRating, ProductSize, ProductSizeDetail  } from '@/features/product/components'
 
 export default function Page() {
     return (
