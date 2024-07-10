@@ -11,7 +11,7 @@ export default function Layout({ children }: {children: React.ReactNode}) {
             </div>
             
             {/* VIEW PRODUCT PAGE */}
-            <div className="overflow-y-auto py-24 ">
+            <div className="overflow-y-auto h-screen py-24 ">
                 {children}
             </div>
 

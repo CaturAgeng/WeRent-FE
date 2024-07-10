@@ -5,7 +5,7 @@ export default function View() {
     const sizes=["XS", "S", "M", "L", "XL"];
 
     return (
-        <div className="flex items-center justify-start h-screen flex-col overflow-hidden">
+        <div className="flex items-center justify-start h-full flex-col overflow-hidden">
             
             {/* PRODUCT IMAGE */}
             <Image 
