@@ -1,7 +1,7 @@
 export default function Page() {
     return (
-        <div>
-            <h1>Rate Review Page</h1>
+        <div className="flex justify-center items-center h-screen w-screen">
+            <h1 className="text-3xl font-extrabold">Rate Review Page</h1>
         </div>
     );
 }

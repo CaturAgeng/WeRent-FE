@@ -1,33 +1,38 @@
 import Image from "@/node_modules/next/image";
 import { StarRating, ProductSize, ProductSizeDetail  } from '@/app/ui/product/components'
+import { products, generateSizeDetail } from "@/app/lib/dummy-data";
 
 export default function View() {
-    const sizes=["XS", "S", "M", "L", "XL"];
+    const product = products[0]
+
+    const sizeDetail = generateSizeDetail(product.size);
 
     return (
         <div className="flex items-center justify-start h-full flex-col overflow-hidden">
             
             {/* PRODUCT IMAGE */}
-            <Image 
-                src="/dummy/contohAbaya.png"
-                width="1000"
-                height="1000"
-                alt="contoh abaya"
-            />
+            {product.image.map((imgSrc, index) => (
+                <Image 
+                    key={index}
+                    src={imgSrc}
+                    width="1000"
+                    height="1000"
+                    alt={product.name}
+                />
+            ))}
 
             {/* PRODUCT NAME & GUIDE */}
             <div className="flex flex-col items-start w-screen pt-2 px-8">
                 
                 {/* Product Name */}
-                <h1 className="text-2xl font-semibold mt-2">Black Kaftan with Embellishment</h1>
-                {/* <h1 className="text-2xl font-semibold mt-2">{product.name}</h1> */}
+                <h1 className="text-2xl font-semibold mt-2">{product.name}</h1>
                 
                 {/* Product Review Rating */}
-                <StarRating review={4} rate={4}
+                <StarRating review={product.review} rate={product.rating}
                 />
                 
                 {/* Product Size & Guide */}
-                <ProductSize sizes={sizes} />
+                <ProductSize sizes={product.size} />
             </div>
 
             {/* PRODUCT DESIGNER */}
@@ -75,14 +80,7 @@ export default function View() {
                     </div>
 
                     {/* Product Detail Here */}
-                    <ProductSizeDetail
-                        sizes={[
-                            {size: "XS", bustSize: "74", lengthSize: "87"},
-                            {size: "S", bustSize: "76", lengthSize: "88"},
-                            {size: "M", bustSize: "78", lengthSize: "89"},
-                            {size: "L", bustSize: "80", lengthSize: "90"},
-                            {size: "XL", bustSize: "82", lengthSize: "91"},
-                        ]}
+                    <ProductSizeDetail sizes={sizeDetail}
                     />
                 </div>
             </div>
