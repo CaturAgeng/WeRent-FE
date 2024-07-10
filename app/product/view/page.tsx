@@ -1,5 +1,5 @@
 import Image from "@/node_modules/next/image";
-import { StarRating, ProductSize, ProductSizeDetail  } from '@/features/product/components'
+import { StarRating, ProductSize, ProductSizeDetail  } from '@/app/ui/product/components'
 
 export default function View() {
     const sizes=["XS", "S", "M", "L", "XL"];

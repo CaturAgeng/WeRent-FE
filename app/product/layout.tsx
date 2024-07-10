@@ -1,4 +1,4 @@
-import { TopNavigation, BottomNavigation } from "@/features/product/components";
+import { TopNavigation, BottomNavigation } from "@/app/ui/product/components";
 
 
 export default function Layout({ children }: {children: React.ReactNode}) {
