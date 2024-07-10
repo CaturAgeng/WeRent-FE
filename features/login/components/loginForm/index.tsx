@@ -1,20 +1,57 @@
+"use client"
+
 import { EyeCloseIcon, EyeOpenIcon } from "assets";
 import { Card, Input, Button } from "features/base";
-import { useState } from "react";
-import { useRouter } from "next/router";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useMutation } from "@tanstack/react-query";
+import { loginRequestProps } from "features/login";
+import Cookies from "js-cookie";
+import { token } from "config";
+import { loginRequest } from "features/login";
 
 export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
-  //const router = useRouter();
-  const loginHandler = () => {
-
-  };
+  // rememeber, this use router shoud be import from next/navigation
+  const router = useRouter(); 
 
   const showPasswordHandler = () => {
     setShowPassword((prev) => !prev);
   };
+
+  const {mutate} = useMutation({
+    mutationFn: ( payload : loginRequestProps) => loginRequest(payload),
+    onSuccess: (data) => {
+        const {access_token} = data
+        Cookies.set(token, access_token)
+        router.push("/product")
+    },
+    onError: (error) => {
+        console.log(error)
+    }
+  })
+
+  const loginHandler = (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault()
+      const formData = new FormData(event.currentTarget)
+      const email = formData.get("email")
+      const password = formData.get("password")
+    
+      if (!email || !password) {
+          console.log("email or password not found")
+          return
+      }
+
+      const payload = {
+          email: email!.toString(),
+          password: password!.toString()
+      }
+      console.log(payload)
+
+      mutate(payload)
+  }
 
   return (
     <Card className="space-y-2 shadow-lg p-5 rouded-lg">

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ReactQueryProvider from "provider/reactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });

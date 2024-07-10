@@ -15,6 +15,7 @@ export function RegisterForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [confirmShowPassword, setConfirmShowPassword] = useState(false);
 
+   // rememeber, this use router shoud be import from next/navigation  
   const router = useRouter();
   
 
