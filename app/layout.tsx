@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import ReactQueryProvider from "provider/reactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const montserrat = Montserrat({ subsets: ["latin"] })
@@ -17,8 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${montserrat.className} antialiased`}>{children}</body>
-    </html>
+   
+      <html lang="en">
+        
+        <body className={`${montserrat.className} antialiased`}>
+        <ReactQueryProvider>
+          {children}
+          </ReactQueryProvider>
+          </body>
+      </html>
+   
+    
   );
 }
