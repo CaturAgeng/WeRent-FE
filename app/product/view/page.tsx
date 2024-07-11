@@ -136,7 +136,7 @@ export default function View() {
                     <ThumbsUp />
                 </div>
                 <div className="flex flex-col ">
-                    <p className="text-sm py-2">This black kaftan is a wardrobe staple for me now! The quality is outstanding, and it's incredibly versatile. ...</p>
+                    <p className="text-sm py-2">This black kaftan is a wardrobe staple for me now! The quality is outstanding, and it&apos;s incredibly versatile. ...</p>
                     <p className="text-xs text-gray-400">Nov 29. 2023</p>
                 </div>
             </div>
