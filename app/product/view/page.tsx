@@ -1,11 +1,17 @@
 import Image from "@/node_modules/next/image";
-import { StarRating, ProductSize, ProductSizeDetail  } from '@/app/ui/product/components'
-import { products, generateSizeDetail } from "@/app/lib/dummy-data";
+import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp  } from '@/app/ui/product/components'
+import { products, generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
 
 export default function View() {
-    const product = products[0]
-
+    const customer = customers[0];
+    const product = products[0];
     const sizeDetail = generateSizeDetail(product.size);
+    const meanRating = calculateMeanRating(customers);
+    const barData = [
+        { label: 'Small', percentage: 2},
+        { label: 'True to Size', percentage: 85},
+        { label: 'Large', percentage: 13},
+    ];
 
     return (
         <div className="flex items-center justify-start h-full flex-col overflow-hidden">
@@ -18,6 +24,7 @@ export default function View() {
                     width="1000"
                     height="1000"
                     alt={product.name}
+                    className="flex flex-row w-screen"
                 />
             ))}
 
@@ -28,8 +35,12 @@ export default function View() {
                 <h1 className="text-2xl font-semibold mt-2">{product.name}</h1>
                 
                 {/* Product Review Rating */}
-                <StarRating review={product.review} rate={product.rating}
-                />
+                <div className="flex flex-row gap-2 py-4 pr-4 items-center">
+                    <StarRating 
+                        rate={meanRating}
+                    />
+                    <p className="text-xs text-gray-400">{product.review} REVIEW(S)</p>
+                </div>
                 
                 {/* Product Size & Guide */}
                 <ProductSize sizes={product.size} />
@@ -37,11 +48,11 @@ export default function View() {
 
             {/* PRODUCT DESIGNER */}
             <div className="flex flex-col items-start w-screen py-2 px-8">
-                <div className="bg-gray-500 w-full h-0.5 mt-1"></div>
+                <div className="bg-gray-400 w-full h-0.5 mt-1"></div>
                 
                 {/* Designer Banner */}
                 <div className="flex flex-row w-full justify-between my-2">
-                    <h1 className="text-xs font-bold">DESIGNERS</h1>
+                    <h1 className="text-sm font-bold">DESIGNERS</h1>
                     <span className="text-xs">VIEW THE COLLECTION</span>
                 </div>
                 <Image className="mb-2"
@@ -54,20 +65,20 @@ export default function View() {
 
             {/* PRODUCT DETAIL & SIZE GUIDE */}
             <div className="flex flex-col items-start w-screen py-2 px-8">
-                <div className="bg-gray-500 w-full h-0.5 my-1"></div>
+                <div className="bg-gray-400 w-full h-0.5 my-1"></div>
                 
                 <h1 className="text-s font-bold">PRODUCT DETAIL</h1>
 
                 {/* Product Material */}
                 <div className="flex flex-row w-full justify-between my-1">
                     <h1 className="text-xs font-bold">FABRIC</h1>
-                    <p className="text-xs text-gray-500">SILK</p>
+                    <p className="text-xs text-gray-400 font-semibold">SILK</p>
                 </div>
 
                 {/* Product Material */}
                 <div className="flex flex-row w-full justify-between my-1">
                     <h1 className="text-xs font-bold">FIT</h1>
-                    <p className="text-xs text-gray-500">TRUE TO SIZE</p>
+                    <p className="text-xs text-gray-400 font-semibold">TRUE TO SIZE</p>
                 </div>
 
                 {/* Size Guide */}
@@ -82,6 +93,51 @@ export default function View() {
                     {/* Product Detail Here */}
                     <ProductSizeDetail sizes={sizeDetail}
                     />
+                </div>
+            </div>
+
+            {/* REVIEW AND COMMMENT */}
+            <div className="flex flex-col items-start w-screen py-2 px-8">
+                <div className="bg-gray-00 w-full h-0.5 my-1"></div>
+                <div className="flex w-full justify-between items-center">
+                    <h1 className="text-s font-bold">REVIEWS ({product.review})</h1>
+                    <a className="text-xs text-green-900 font-semibold underline" href="/review">View More</a>
+                </div>
+                <div className="p-1 w-full">
+                    <div className="flex justify-start">
+                        <StarRating 
+                            rate={meanRating}
+                            size="w-5 h-5"
+                        />
+                    </div>
+                    <BarGraph 
+                        data={barData}
+                    />
+                </div>
+                <div className="w-full flex flex-row justify-center">
+                    <div className="bg-gray-200 w-5/6 h-0.5"></div>
+                </div>
+            </div>
+
+            <div className="flex flex-col items-start w-screen py-2 px-8">
+                <div className="flex flex-row w-full justify-between items-center">
+                    <div className="flex flex-row items-center gap-4">
+                        <div className="bg-black w-7 h-7 rounded-full"></div>
+                        <div className="flex flex-col gap-2">
+                            {/* USER RATING */}
+                            <StarRating 
+                                rate={customer.rating}
+                                size="w-4 h-4"
+                                gap="gap-0.5"
+                            />
+                            <p className="text-xs text-gray-400">Size Detail</p>
+                        </div>
+                    </div>
+                    <ThumbsUp />
+                </div>
+                <div className="flex flex-col ">
+                    <p className="text-sm py-2">This black kaftan is a wardrobe staple for me now! The quality is outstanding, and it's incredibly versatile. ...</p>
+                    <p className="text-xs text-gray-400">Nov 29. 2023</p>
                 </div>
             </div>
         </div>

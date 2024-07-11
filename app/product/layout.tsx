@@ -1,12 +1,14 @@
 import { TopNavigation, BottomNavigation } from "@/app/ui/product/components";
-
+import { products } from "../lib/dummy-data";
 
 export default function Layout({ children }: {children: React.ReactNode}) {
+    const product = products[0];
+
     return (
         <div className="w-screen h-screen flex flex-col items-center justify-between">
             
             {/* TOP NAVIGATION */}
-            <div className="fixed top-0">
+            <div className="fixed top-0 z-50">
                 <TopNavigation />
             </div>
             
@@ -18,7 +20,7 @@ export default function Layout({ children }: {children: React.ReactNode}) {
             {/* BOTTOM NAVIGATION */}
             <div className="fixed bottom-0">
                 <BottomNavigation 
-                    rent={[{price: "300.000", days: 4}]} 
+                    rent={[{price: product.rentPrice, days: product.rentDays}]} 
                 />
             </div>
         </div>

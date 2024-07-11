@@ -8,3 +8,8 @@ export type Product = {
     rentPrice: string;
     rentDays: number;
 };
+
+export type Customer = {
+    id: string;
+    rating: number;
+}

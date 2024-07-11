@@ -1,4 +1,4 @@
-import { Product } from "./definitions";
+import { Product, Customer } from "./definitions";
 
 export const products: Product[] = [
     { 
@@ -8,11 +8,27 @@ export const products: Product[] = [
         size: ['XS','S','M','L','XL'],
         rating: 4,
         review: 100,
-        rentPrice: '30000',
+        rentPrice: '300.000',
         rentDays: 4,
     },
 ];
 
+export const customers: Customer[] = [
+    {
+        id: '01',
+        rating: 5
+    },
+    {
+        id: '02',
+        rating: 4
+    },
+    {
+        id: '03',
+        rating: 3
+    },
+];
+
+// SIZE DETAIL
 export const generateSizeDetail = (sizes: string[]) => {
     return sizes.map((size) => {
         let bustSize, lengthSize;
@@ -44,3 +60,9 @@ export const generateSizeDetail = (sizes: string[]) => {
         return { size, bustSize, lengthSize };
     });
 };
+
+// MEAN RATING
+export const calculateMeanRating = (customers: Customer[]): number => {
+    const totalRatings = customers.reduce((accumulator, customer) => accumulator + customer.rating, 0);
+    return totalRatings / customers.length;
+}
