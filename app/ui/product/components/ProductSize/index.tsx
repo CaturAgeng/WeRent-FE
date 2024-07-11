@@ -1,7 +1,11 @@
 'use client'
 import React, { useState, useEffect, useRef } from "react";
 
-export default function ProductSize() {
+interface ProductSizeProps {
+    sizes: string[];
+}
+
+export default function ProductSize({ sizes }: ProductSizeProps) {
     const [selectedSize, setSelectedSize] = useState("");
     const [isOpen, setIsOpen] = useState(false);
 
@@ -44,7 +48,7 @@ export default function ProductSize() {
                     className="absolute w-24 bg-white border border-gray-200 shadow-lg rounded-md"
                 >
                     <ul className="py-1">
-                        {["XS", "S", "M", "L", "XL"].map((size) => (
+                        {sizes.map((size) => (
                             <li
                                 key={size}
                                 className="text-sm cursor-pointer px-4 py-2 hover:bg-gray-300"

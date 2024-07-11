@@ -18,7 +18,6 @@ export function RegisterForm() {
    // rememeber, this use router shoud be import from next/navigation  
   const router = useRouter();
   
-
   const showPasswordHandler = (callBack: Dispatch<SetStateAction<boolean>>) => {
     callBack((prev) => !prev);
   }; 
