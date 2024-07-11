@@ -2,7 +2,7 @@
 
 import { LoginWrapper } from "features/login";
 
-export default function register() {
+export default function Login() {
     return (
         <LoginWrapper />
     );
