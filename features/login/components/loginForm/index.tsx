@@ -48,6 +48,7 @@ export function LoginForm() {
           email: email!.toString(),
           password: password!.toString()
       }
+
       console.log(payload)
 
       mutate(payload)
@@ -66,9 +67,10 @@ export function LoginForm() {
             />
             </div>
             <p className="text-center text-xl mb-2">Login Form</p>
-            <Input label="E-mail" data-cy="email-input"/>
+            <Input label="E-mail" name="email" data-cy="email-input"/>
             <Input
                 label="Password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 rightNode={showPassword ? <EyeCloseIcon /> : <EyeOpenIcon />}
                 rightNodeClick={showPasswordHandler}
@@ -84,7 +86,7 @@ export function LoginForm() {
                 Not registered? Click <a href="/register">Register</a>
             </p>
         </form>
-      
+
     </Card>
   );
 }
