@@ -66,7 +66,6 @@ export function LoginForm() {
                 className="object-center"
             />
             </div>
-
             <p className="text-center text-xl mb-2">Login Form</p>
             <Input label="E-mail" name="email" data-cy="email-input"/>
             <Input
@@ -87,6 +86,7 @@ export function LoginForm() {
                 Not registered? Click <a href="/register">Register</a>
             </p>
         </form>
+
     </Card>
   );
 }

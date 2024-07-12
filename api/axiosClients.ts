@@ -12,9 +12,14 @@ axiosInstance.interceptors.request.use(
     (config) => {
         const auth = Cookies.get(token);
 
-        config.headers.Authorization = `Bearer ${auth}`;
-        return config;
+        if (auth) { config.headers.Authorization = `Bearer ${auth}`;
+        }  else {
+            console.warn("token not found")
+        } return config;
 
     },
-    (error) => Promise.reject(error)
+    (error) => {
+        console.error("Request error:", error);
+        return Promise.reject(error);
+    }
 )
