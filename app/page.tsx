@@ -1,11 +1,25 @@
-import PreviewWrapper from "@/components/features/review/preview/previewWrapper";
+'use client'
 
-const Home = () => {
-  return (
-    <div className="p-4">
-      <PreviewWrapper initialSmall={1} initialTrueToSize={1} initialLarge={1} />
-    </div>
-  );
+import React from 'react';
+import { useRouter } from 'next/navigation';
+
+const Home: React.FC = () => {
+    const router = useRouter();
+
+    const handleAddClick = () => {
+        router.push('/rate'); 
+    };
+
+    return (
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+            <button
+                onClick={handleAddClick}
+                className="bg-green-500 text-white p-2 rounded-md"
+            >
+                Add
+            </button>
+        </div>
+    );
 };
 
 export default Home;
