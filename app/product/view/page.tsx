@@ -1,11 +1,52 @@
+'use client'
+
 import Image from "@/node_modules/next/image";
 import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp  } from '@/app/ui/product/components'
-import { products, generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
+import { generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
+import { useEffect, useState } from 'react';
+import { viewProductRequest } from '@/app/lib/viewproduct'
+import { Product, Customer } from "@/app/lib/definitions";
 
-export default function View() {
-    const customer = customers[0];
-    const product = products[0];
-    const sizeDetail = generateSizeDetail(product.size);
+export default function ProductViewWrapper() {
+    // const customer = customers[0];
+    // const product = products[0];
+    const [productData, setProductData] = useState<Product | null>(null);
+    const [customerData, setCustomerData] = useState<Customer | null>(null);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchProductData = async () => {
+            try {
+                console.log('Fetching product data...');
+                const { product, customer } = await viewProductRequest('01', '01');
+                console.log('Product data fetched:', product);
+                console.log('Customer data fetched:', customer);
+                setProductData(product);
+                setCustomerData(customer);
+            } catch (err) {
+                console.error('Error fetching product data:', err);
+                if (err instanceof Error) {
+                    setError(err.message);
+                } else {
+                    setError("An unknown error occurred");
+                }
+            }
+        };
+
+        fetchProductData();
+    }, []);
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
+    if (!productData || !customerData) {
+        return <div>Loading...</div>;
+    }
+
+    const sizeDetail = generateSizeDetail(productData.size);
+    
+    // const sizeDetail = generateSizeDetail(product.size);
     const meanRating = calculateMeanRating(customers);
     const barData = [
         { label: 'Small', percentage: 2},
@@ -17,13 +58,13 @@ export default function View() {
         <div className="flex items-center justify-start h-full flex-col overflow-hidden">
             
             {/* PRODUCT IMAGE */}
-            {product.image.map((imgSrc, index) => (
+            {productData.image.map((imgSrc, index) => (
                 <Image 
                     key={index}
                     src={imgSrc}
                     width="1000"
                     height="1000"
-                    alt={product.name}
+                    alt={productData.name}
                     className="flex flex-row w-screen"
                 />
             ))}
@@ -32,18 +73,18 @@ export default function View() {
             <div className="flex flex-col items-start w-screen pt-2 px-8">
                 
                 {/* Product Name */}
-                <h1 className="text-2xl font-semibold mt-2">{product.name}</h1>
+                <h1 className="text-2xl font-semibold mt-2">{productData.name}</h1>
                 
                 {/* Product Review Rating */}
                 <div className="flex flex-row gap-2 py-4 pr-4 items-center">
                     <StarRating 
                         rate={meanRating}
                     />
-                    <p className="text-xs text-gray-400">{product.review} REVIEW(S)</p>
+                    <p className="text-xs text-gray-400">{productData.review} REVIEW(S)</p>
                 </div>
                 
                 {/* Product Size & Guide */}
-                <ProductSize sizes={product.size} />
+                <ProductSize sizes={productData.size} />
             </div>
 
             {/* PRODUCT DESIGNER */}
@@ -100,7 +141,7 @@ export default function View() {
             <div className="flex flex-col items-start w-screen py-2 px-8">
                 <div className="bg-gray-00 w-full h-0.5 my-1"></div>
                 <div className="flex w-full justify-between items-center">
-                    <h1 className="text-s font-bold">REVIEWS ({product.review})</h1>
+                    <h1 className="text-s font-bold">REVIEWS ({productData.review})</h1>
                     <a className="text-xs text-green-900 font-semibold underline" href="/review">View More</a>
                 </div>
                 <div className="p-1 w-full">
@@ -126,7 +167,7 @@ export default function View() {
                         <div className="flex flex-col gap-2">
                             {/* USER RATING */}
                             <StarRating 
-                                rate={customer.rating}
+                                rate={customerData.rating}
                                 size="w-4 h-4"
                                 gap="gap-0.5"
                             />

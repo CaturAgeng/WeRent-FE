@@ -1,9 +1,9 @@
-import View from "./view/page"
+import ProductViewWrapper from "./view/page";
 
 export default function Page() {
     return (
         <div>
-            <View />
+            <ProductViewWrapper />
         </div>
     );
 }
