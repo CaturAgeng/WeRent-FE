@@ -6,6 +6,7 @@ import { generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/du
 import { useEffect, useState } from 'react';
 import { viewProductRequest } from '@/app/lib/viewproduct'
 import { Product, Customer } from "@/app/lib/definitions";
+// import { products } from "@/app/lib/dummy-data";
 
 export default function ProductViewWrapper() {
     // const customer = customers[0];
@@ -19,17 +20,10 @@ export default function ProductViewWrapper() {
             try {
                 console.log('Fetching product data...');
                 const { product, customer } = await viewProductRequest('01', '01');
-                console.log('Product data fetched:', product);
-                console.log('Customer data fetched:', customer);
                 setProductData(product);
                 setCustomerData(customer);
             } catch (err) {
-                console.error('Error fetching product data:', err);
-                if (err instanceof Error) {
-                    setError(err.message);
-                } else {
-                    setError("An unknown error occurred");
-                }
+                setError(err.message);
             }
         };
 
@@ -48,6 +42,7 @@ export default function ProductViewWrapper() {
     
     // const sizeDetail = generateSizeDetail(product.size);
     const meanRating = calculateMeanRating(customers);
+
     const barData = [
         { label: 'Small', percentage: 2},
         { label: 'True to Size', percentage: 85},

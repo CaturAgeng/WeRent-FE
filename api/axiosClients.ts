@@ -4,8 +4,12 @@ import Cookies from "js-cookie";
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
 
 export const axiosInstance = axios.create({
-    baseURL : baseUrl
-})
+    baseURL : baseUrl,
+    headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+    },
+});
 
 console.log(axiosInstance)
 axiosInstance.interceptors.request.use(
@@ -15,7 +19,8 @@ axiosInstance.interceptors.request.use(
         if (auth) { config.headers.Authorization = `Bearer ${auth}`;
         }  else {
             console.warn("token not found")
-        } return config;
+        } 
+        return config;
 
     },
     (error) => {
