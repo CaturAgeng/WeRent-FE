@@ -51,7 +51,7 @@ export default function ProductSize({ sizes }: ProductSizeProps) {
                         {sizes.map((size) => (
                             <li
                                 key={size}
-                                className="text-sm cursor-pointer px-4 py-2 hover:bg-gray-300"
+                                className="text-sm cursor-pointer px-4 py-2 hover:bg-gray-200"
                                 onClick={() => handleSizeSelect(size)}
                             >
                                 {size}

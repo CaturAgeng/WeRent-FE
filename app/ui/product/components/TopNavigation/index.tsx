@@ -1,7 +1,7 @@
 export default function TopNavigation() {
     
     return (
-        <div className="w-full h-24 flex-col bg-white drop-shadow-md z-50">
+        <div className="w-full h-24 flex-col bg-white border-b-2 z-50">
                 <div className="w-screen h-1/3 "></div>
                 <div className="w-screen h-2/3 p-4 flex flex-row justify-start items-center">
                     <div className="rounded-full w-8 h-8 flex items-center cursor-pointer justify-center hover:bg-gray-300">

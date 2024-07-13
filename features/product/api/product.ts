@@ -1,4 +1,3 @@
-// import { Product, Customer } from './definitions';
 import { axiosInstance } from 'api/axiosClients';
 import { AxiosError } from 'axios';
 

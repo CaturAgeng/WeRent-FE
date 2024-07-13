@@ -10,8 +10,8 @@ export default function BottomNavigation({ rent }: RentDetailProps) {
 
     return (
         <div className=" w-full h-24 flex-col bg-white border-t-2">
-            <div className="w-screen h-2/3 py-2 px-4 flex flex-row justify-between items-center">
-                <div className=" h-full flex flex-col items-start cursor-pointer justify-center">
+            <div className="w-screen max-w-md h-2/3 py-2 px-4 flex flex-row justify-between items-center">
+                <div className=" h-full flex flex-col items-start justify-center">
                     <div className="h-1/4 flex items-center">
                         <p className="text-xs">Rent Fee</p>
                     </div>

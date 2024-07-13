@@ -3,44 +3,46 @@
 import Image from "@/node_modules/next/image";
 import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp  } from '@/app/ui/product/components'
 import { generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
-import { useEffect, useState } from 'react';
-import { viewProductRequest } from '@/app/lib/viewproduct'
-import { Product, Customer } from "@/app/lib/definitions";
-// import { products } from "@/app/lib/dummy-data";
+// import { useEffect, useState } from 'react';
+// import { viewProductRequest } from '@/app/lib/viewproduct'
+// import { Product, Customer } from "@/app/lib/definitions";
+import { products } from "@/app/lib/dummy-data";
 
 export default function ProductViewWrapper() {
-    // const customer = customers[0];
-    // const product = products[0];
-    const [productData, setProductData] = useState<Product | null>(null);
-    const [customerData, setCustomerData] = useState<Customer | null>(null);
-    const [error, setError] = useState<string | null>(null);
+    const customer = customers[0];
+    const product = products[0];
 
-    useEffect(() => {
-        const fetchProductData = async () => {
-            try {
-                console.log('Fetching product data...');
-                const { product, customer } = await viewProductRequest('01', '01');
-                setProductData(product);
-                setCustomerData(customer);
-            } catch (err) {
-                setError(err.message);
-            }
-        };
+    // GET Data from Axios
+    // const [productData, setProductData] = useState<Product | null>(null);
+    // const [customerData, setCustomerData] = useState<Customer | null>(null);
+    // const [error, setError] = useState<string | null>(null);
 
-        fetchProductData();
-    }, []);
+    // useEffect(() => {
+    //     const fetchProductData = async () => {
+    //         try {
+    //             console.log('Fetching product data...');
+    //             const { product, customer } = await viewProductRequest('01', '01');
+    //             setProductData(product);
+    //             setCustomerData(customer);
+    //         } catch (err) {
+    //             setError(err.message);
+    //         }
+    //     };
 
-    if (error) {
-        return <div>Error: {error}</div>;
-    }
+    //     fetchProductData();
+    // }, []);
 
-    if (!productData || !customerData) {
-        return <div>Loading...</div>;
-    }
+    // if (error) {
+    //     return <div>Error: {error}</div>;
+    // }
 
-    const sizeDetail = generateSizeDetail(productData.size);
+    // if (!productData || !customerData) {
+    //     return <div>Loading...</div>;
+    // }
+
+    // const sizeDetail = generateSizeDetail(productData.size);
     
-    // const sizeDetail = generateSizeDetail(product.size);
+    const sizeDetail = generateSizeDetail(product.size);
     const meanRating = calculateMeanRating(customers);
 
     const barData = [
@@ -50,40 +52,40 @@ export default function ProductViewWrapper() {
     ];
 
     return (
-        <div className="flex items-center justify-start h-full flex-col overflow-hidden">
+        <div className="flex w-screen max-w-md items-center justify-start h-full flex-col overflow-hidden">
             
             {/* PRODUCT IMAGE */}
-            {productData.image.map((imgSrc, index) => (
+            {product.image.map((imgSrc, index) => (
                 <Image 
                     key={index}
                     src={imgSrc}
                     width="1000"
                     height="1000"
-                    alt={productData.name}
+                    alt={product.name}
                     className="flex flex-row w-screen"
                 />
             ))}
 
             {/* PRODUCT NAME & GUIDE */}
-            <div className="flex flex-col items-start w-screen pt-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md pt-2 px-8">
                 
                 {/* Product Name */}
-                <h1 className="text-2xl font-semibold mt-2">{productData.name}</h1>
+                <h1 className="text-2xl font-semibold mt-2">{product.name}</h1>
                 
                 {/* Product Review Rating */}
                 <div className="flex flex-row gap-2 py-4 pr-4 items-center">
                     <StarRating 
                         rate={meanRating}
                     />
-                    <p className="text-xs text-gray-400">{productData.review} REVIEW(S)</p>
+                    <p className="text-xs text-gray-400">{product.review} REVIEW(S)</p>
                 </div>
                 
                 {/* Product Size & Guide */}
-                <ProductSize sizes={productData.size} />
+                <ProductSize sizes={product.size} />
             </div>
 
             {/* PRODUCT DESIGNER */}
-            <div className="flex flex-col items-start w-screen py-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="bg-gray-400 w-full h-0.5 mt-1"></div>
                 
                 {/* Designer Banner */}
@@ -100,7 +102,7 @@ export default function ProductViewWrapper() {
             </div>
 
             {/* PRODUCT DETAIL & SIZE GUIDE */}
-            <div className="flex flex-col items-start w-screen py-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="bg-gray-400 w-full h-0.5 my-1"></div>
                 
                 <h1 className="text-s font-bold">PRODUCT DETAIL</h1>
@@ -133,10 +135,10 @@ export default function ProductViewWrapper() {
             </div>
 
             {/* REVIEW AND COMMMENT */}
-            <div className="flex flex-col items-start w-screen py-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="bg-gray-00 w-full h-0.5 my-1"></div>
                 <div className="flex w-full justify-between items-center">
-                    <h1 className="text-s font-bold">REVIEWS ({productData.review})</h1>
+                    <h1 className="text-s font-bold">REVIEWS ({product.review})</h1>
                     <a className="text-xs text-green-900 font-semibold underline" href="/review">View More</a>
                 </div>
                 <div className="p-1 w-full">
@@ -155,14 +157,14 @@ export default function ProductViewWrapper() {
                 </div>
             </div>
 
-            <div className="flex flex-col items-start w-screen py-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="flex flex-row w-full justify-between items-center">
                     <div className="flex flex-row items-center gap-4">
                         <div className="bg-black w-7 h-7 rounded-full"></div>
                         <div className="flex flex-col gap-2">
                             {/* USER RATING */}
                             <StarRating 
-                                rate={customerData.rating}
+                                rate={customer.rating}
                                 size="w-4 h-4"
                                 gap="gap-0.5"
                             />
