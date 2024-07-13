@@ -1,25 +1,13 @@
-'use client'
+import Login from "./login/page"
 
-import React from 'react';
-import { useRouter } from 'next/navigation';
+export default function Home() {
+  return (
+    <div>
+      <Login />
+    </div>
+    // <div className="flex flex-row h-sceen w-screen justify-center items-center">
+    //   <h1>Welcome to WeRent</h1>
+    // </div>
+  );
+}
 
-const Home: React.FC = () => {
-    const router = useRouter();
-
-    const handleAddClick = () => {
-        router.push('/rate'); 
-    };
-
-    return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <button
-                onClick={handleAddClick}
-                className="bg-green-500 text-white p-2 rounded-md"
-            >
-                Add
-            </button>
-        </div>
-    );
-};
-
-export default Home;

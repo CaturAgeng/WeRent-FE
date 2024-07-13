@@ -2,6 +2,7 @@
   "name": "werent-fe",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -11,11 +12,18 @@
   "dependencies": {
     "axios": "^1.7.2",
     "next": "14.2.4",
-    "react": "^18",
-    "react-dom": "^18",
     "react-router-dom": "^6.24.1"
   },
   "devDependencies": {
+    "@tanstack/react-query": "^5.50.1",
+    "js-cookie": "^3.0.5",
+    "react": "^18.3.1",
+    "react-dom": "^18",
+    "tailwind-merge": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -23,7 +31,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
     "postcss": "^8.4.39",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "^3.4.4",
     "typescript": "^5"
   }
 }

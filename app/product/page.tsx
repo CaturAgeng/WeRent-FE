@@ -1,7 +1,9 @@
-export default function Product() {
+import ProductViewWrapper from "./view/page";
+
+export default function Page() {
     return (
-        <div className="flex justify-center items-center h-screen w-screen">
-            <h1 className="text-3xl font-extrabold">Product Page</h1>
+        <div>
+            <ProductViewWrapper />
         </div>
     );
 }
