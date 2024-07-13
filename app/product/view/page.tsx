@@ -1,11 +1,11 @@
 'use client'
 
 import Image from "@/node_modules/next/image";
-import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp  } from '@/app/ui/product/components'
+import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp  } from 'features/product'
 import { generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
 // import { useEffect, useState } from 'react';
-// import { viewProductRequest } from '@/app/lib/viewproduct'
-// import { Product, Customer } from "@/app/lib/definitions";
+// import { viewProductRequest } from 'features/product'
+// import { Product, Customer } from "features/product";
 import { products } from "@/app/lib/dummy-data";
 
 export default function ProductViewWrapper() {
