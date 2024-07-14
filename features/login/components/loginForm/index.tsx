@@ -25,11 +25,13 @@ export function LoginForm() {
     mutationFn: ( payload : loginRequestProps) => loginRequest(payload),
     onSuccess: (data) => {
         const {access_token} = data
-        Cookies.set(token, access_token)
+        console.log("login success, received token", access_token)
+        Cookies.set(token, access_token);
+        console.log("token is set in cookies, now redirecting to product page")
         router.push("/product")
     },
     onError: (error) => {
-        console.log(error)
+        console.log("login failed", error)
     }
   })
 
@@ -49,14 +51,14 @@ export function LoginForm() {
           password: password!.toString()
       }
 
-      console.log(payload)
+      console.log("payload", payload)
 
       mutate(payload)
   }
 
   return (
     <Card className="space-y-2 shadow-lg p-5 rouded-lg">
-        <form onSubmit={loginHandler} data-cy="register-form">
+        <form onSubmit={loginHandler} className="space-y-2" data-cy="login-form">
             <div className="flex justify-center">
             <Image
                 src="/dummy/19.png"
