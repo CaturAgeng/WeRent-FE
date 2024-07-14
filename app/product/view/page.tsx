@@ -1,12 +1,50 @@
-import Image from "@/node_modules/next/image";
-import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp  } from '@/app/ui/product/components'
-import { products, generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
+'use client'
 
-export default function View() {
+import Image from "@/node_modules/next/image";
+import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp  } from 'features/product'
+import { generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
+// import { useEffect, useState } from 'react';
+// import { viewProductRequest } from 'features/product'
+// import { Product, Customer } from "features/product";
+import { products } from "@/app/lib/dummy-data";
+
+export default function ProductViewWrapper() {
     const customer = customers[0];
     const product = products[0];
+
+    // GET Data from Axios
+    // const [productData, setProductData] = useState<Product | null>(null);
+    // const [customerData, setCustomerData] = useState<Customer | null>(null);
+    // const [error, setError] = useState<string | null>(null);
+
+    // useEffect(() => {
+    //     const fetchProductData = async () => {
+    //         try {
+    //             console.log('Fetching product data...');
+    //             const { product, customer } = await viewProductRequest('01', '01');
+    //             setProductData(product);
+    //             setCustomerData(customer);
+    //         } catch (err) {
+    //             setError(err.message);
+    //         }
+    //     };
+
+    //     fetchProductData();
+    // }, []);
+
+    // if (error) {
+    //     return <div>Error: {error}</div>;
+    // }
+
+    // if (!productData || !customerData) {
+    //     return <div>Loading...</div>;
+    // }
+
+    // const sizeDetail = generateSizeDetail(productData.size);
+    
     const sizeDetail = generateSizeDetail(product.size);
     const meanRating = calculateMeanRating(customers);
+
     const barData = [
         { label: 'Small', percentage: 2},
         { label: 'True to Size', percentage: 85},
@@ -14,7 +52,7 @@ export default function View() {
     ];
 
     return (
-        <div className="flex items-center justify-start h-full flex-col overflow-hidden">
+        <div className="flex w-screen max-w-md items-center justify-start h-full flex-col overflow-hidden">
             
             {/* PRODUCT IMAGE */}
             {product.image.map((imgSrc, index) => (
@@ -29,7 +67,7 @@ export default function View() {
             ))}
 
             {/* PRODUCT NAME & GUIDE */}
-            <div className="flex flex-col items-start w-screen pt-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md pt-2 px-8">
                 
                 {/* Product Name */}
                 <h1 className="text-2xl font-semibold mt-2">{product.name}</h1>
@@ -47,7 +85,7 @@ export default function View() {
             </div>
 
             {/* PRODUCT DESIGNER */}
-            <div className="flex flex-col items-start w-screen py-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="bg-gray-400 w-full h-0.5 mt-1"></div>
                 
                 {/* Designer Banner */}
@@ -64,7 +102,7 @@ export default function View() {
             </div>
 
             {/* PRODUCT DETAIL & SIZE GUIDE */}
-            <div className="flex flex-col items-start w-screen py-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="bg-gray-400 w-full h-0.5 my-1"></div>
                 
                 <h1 className="text-s font-bold">PRODUCT DETAIL</h1>
@@ -97,7 +135,7 @@ export default function View() {
             </div>
 
             {/* REVIEW AND COMMMENT */}
-            <div className="flex flex-col items-start w-screen py-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="bg-gray-00 w-full h-0.5 my-1"></div>
                 <div className="flex w-full justify-between items-center">
                     <h1 className="text-s font-bold">REVIEWS ({product.review})</h1>
@@ -119,7 +157,7 @@ export default function View() {
                 </div>
             </div>
 
-            <div className="flex flex-col items-start w-screen py-2 px-8">
+            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="flex flex-row w-full justify-between items-center">
                     <div className="flex flex-row items-center gap-4">
                         <div className="bg-black w-7 h-7 rounded-full"></div>

@@ -1,4 +1,4 @@
-import { Product, Customer } from "./definitions";
+import { Product, Customer } from "features/product";
 
 export const products: Product[] = [
     { 
