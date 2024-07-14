@@ -1,10 +1,11 @@
-import { apiClient } from "api";
+
+import { axiosInstance } from "api/axiosClients";
 import { AxiosError } from "axios";
 import { loginRequestProps } from "features/login";
 
 export async function loginRequest( payload : loginRequestProps ) {
     try {
-        const {data} = await apiClient.post("/user/login", payload)
+        const {data} = await axiosInstance.post("/user/login", payload)
         return data
     } catch(error) {
         if (error instanceof AxiosError) {
