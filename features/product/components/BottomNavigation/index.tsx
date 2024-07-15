@@ -22,7 +22,7 @@ export default function BottomNavigation({ rent }: RentDetailProps) {
                     </div>
                     <div className="h-1/4 items-center"></div>
                 </div>
-                    <Link href="/rate_review">
+                    <Link href="/rate">
                         <button className="rounded-md h-9 w-32 bg-yellow-500 text-xs cursor-pointer hover:bg-yellow-600">ADD</button>
                     </Link>
                 </div>

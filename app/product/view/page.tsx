@@ -1,16 +1,21 @@
 'use client'
 
 import Image from "@/node_modules/next/image";
-import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp  } from 'features/product'
+import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp, BottomNavigation  } from 'features/product'
 import { generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
-// import { useEffect, useState } from 'react';
+import { useState } from 'react';
 // import { viewProductRequest } from 'features/product'
 // import { Product, Customer } from "features/product";
 import { products } from "@/app/lib/dummy-data";
 
 export default function ProductViewWrapper() {
-    const customer = customers[0];
-    const product = products[0];
+    const [currentProductIndex, setCurrentProductIndex] = useState(0);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const currentProduct = products[currentProductIndex];
+    
+    // const customer = customers[0];
+    // const product = products[0];
 
     // GET Data from Axios
     // const [productData, setProductData] = useState<Product | null>(null);
@@ -42,7 +47,7 @@ export default function ProductViewWrapper() {
 
     // const sizeDetail = generateSizeDetail(productData.size);
     
-    const sizeDetail = generateSizeDetail(product.size);
+    const sizeDetail = generateSizeDetail(currentProduct.size);
     const meanRating = calculateMeanRating(customers);
 
     const barData = [
@@ -51,37 +56,63 @@ export default function ProductViewWrapper() {
         { label: 'Large', percentage: 13},
     ];
 
+    const handleNextImage = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % currentProduct.image.length);
+    };
+
+    const handlePrevImage = () => {
+        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + currentProduct.image.length) % currentProduct.image.length);
+    };
+
+    const handleNextProduct = () => {
+        setCurrentProductIndex((prevIndex) => (prevIndex + 1) % products.length);
+        setCurrentImageIndex(0); // Reset image index when product changes
+    };
+
     return (
-        <div className="flex w-screen max-w-md items-center justify-start h-full flex-col overflow-hidden">
+        <div className="flex w-screen max-w-md items-center justify-start h-full flex-col overflow-hidden scroll-smooth">
             
             {/* PRODUCT IMAGE */}
-            {product.image.map((imgSrc, index) => (
+            {currentProduct.image.length > 0 && (
                 <Image 
-                    key={index}
-                    src={imgSrc}
+                    src={currentProduct.image[currentImageIndex]}
                     width="1000"
                     height="1000"
-                    alt={product.name}
+                    alt={currentProduct.name}
                     className="flex flex-row w-screen"
                 />
-            ))}
+            )}
+
+            {/* Navigation Buttons */}
+            <button
+                onClick={handlePrevImage}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-50 text-white px-2 py-1 rounded-full"
+            >
+                &lt;
+            </button>
+            <button
+                onClick={handleNextImage}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-50 text-white px-2 py-1 rounded-full"
+            >
+                &gt;
+            </button>
 
             {/* PRODUCT NAME & GUIDE */}
             <div className="flex flex-col items-start w-screen max-w-md pt-2 px-8">
                 
                 {/* Product Name */}
-                <h1 className="text-2xl font-semibold mt-2">{product.name}</h1>
+                <h1 className="text-2xl font-semibold mt-2">{currentProduct.name}</h1>
                 
                 {/* Product Review Rating */}
                 <div className="flex flex-row gap-2 py-4 pr-4 items-center">
                     <StarRating 
                         rate={meanRating}
                     />
-                    <p className="text-xs text-gray-400">{product.review} REVIEW(S)</p>
+                    <p className="text-xs text-gray-400">{currentProduct.review} REVIEW(S)</p>
                 </div>
                 
                 {/* Product Size & Guide */}
-                <ProductSize sizes={product.size} />
+                <ProductSize sizes={currentProduct.size} />
             </div>
 
             {/* PRODUCT DESIGNER */}
@@ -138,7 +169,7 @@ export default function ProductViewWrapper() {
             <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="bg-gray-00 w-full h-0.5 my-1"></div>
                 <div className="flex w-full justify-between items-center">
-                    <h1 className="text-s font-bold">REVIEWS ({product.review})</h1>
+                    <h1 className="text-s font-bold">REVIEWS ({currentProduct.review})</h1>
                     <a className="text-xs text-green-900 font-semibold underline" href="/review">View More</a>
                 </div>
                 <div className="p-1 w-full">
@@ -164,7 +195,7 @@ export default function ProductViewWrapper() {
                         <div className="flex flex-col gap-2">
                             {/* USER RATING */}
                             <StarRating 
-                                rate={customer.rating}
+                                rate={customers[0].rating}
                                 size="w-4 h-4"
                                 gap="gap-0.5"
                             />
@@ -177,6 +208,19 @@ export default function ProductViewWrapper() {
                     <p className="text-sm py-2">This black kaftan is a wardrobe staple for me now! The quality is outstanding, and it&apos;s incredibly versatile. ...</p>
                     <p className="text-xs text-gray-400">Nov 29. 2023</p>
                 </div>
+            </div>
+
+            {/* BOTTOM NAVIGATION */}
+            <div className="fixed bottom-0 w-full max-w-md">
+                <BottomNavigation
+                    rent={[{ price: currentProduct.rentPrice, days: currentProduct.rentDays }]}
+                />
+                <button
+                    onClick={handleNextProduct}
+                    className="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-full"
+                >
+                    Next Product
+                </button>
             </div>
         </div>
     );
