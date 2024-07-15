@@ -13,13 +13,13 @@ export const products: Product[] = [
     },
     { 
         id: '02',
-        name: 'Black Kaftan with Embellishment 2',
-        image: ['/dummy/contohAbaya2.png'],
-        size: ['XS','S','M','L','XL'],
+        name: '1991 G Wagon 300GF W 463 2 Door Full Spec',
+        image: ['/dummy/contohMobil.png'],
+        size: ['Clean'],
         rating: 5,
         review: 50,
-        rentPrice: '500.000',
-        rentDays: 3,
+        rentPrice: '1.500.000',
+        rentDays: 1,
     },
 ];
 

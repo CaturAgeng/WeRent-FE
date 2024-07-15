@@ -9,19 +9,12 @@ import { useState } from 'react';
 import { products } from "@/app/lib/dummy-data";
 
 export default function ProductViewWrapper() {
-    const [currentProductIndex, setCurrentProductIndex] = useState(0);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-    const currentProduct = products[currentProductIndex];
     
-    // const customer = customers[0];
-    // const product = products[0];
-
     // GET Data from Axios
     // const [productData, setProductData] = useState<Product | null>(null);
     // const [customerData, setCustomerData] = useState<Customer | null>(null);
     // const [error, setError] = useState<string | null>(null);
-
+    
     // useEffect(() => {
     //     const fetchProductData = async () => {
     //         try {
@@ -33,29 +26,36 @@ export default function ProductViewWrapper() {
     //             setError(err.message);
     //         }
     //     };
-
+    
     //     fetchProductData();
     // }, []);
-
+    
     // if (error) {
-    //     return <div>Error: {error}</div>;
+        //     return <div>Error: {error}</div>;
     // }
-
+    
     // if (!productData || !customerData) {
-    //     return <div>Loading...</div>;
+        //     return <div>Loading...</div>;
     // }
 
     // const sizeDetail = generateSizeDetail(productData.size);
+
+    const [currentProductIndex, setCurrentProductIndex] = useState(0);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const currentProduct = products[currentProductIndex];
     
     const sizeDetail = generateSizeDetail(currentProduct.size);
     const meanRating = calculateMeanRating(customers);
 
+    // INTEGRATE THE BAR DATA 
     const barData = [
         { label: 'Small', percentage: 2},
         { label: 'True to Size', percentage: 85},
         { label: 'Large', percentage: 13},
     ];
 
+    // BUTTON HANDLER HERE
     const handleNextImage = () => {
         setCurrentImageIndex((prevIndex) => (prevIndex + 1) % currentProduct.image.length);
     };
@@ -67,6 +67,13 @@ export default function ProductViewWrapper() {
     const handleNextProduct = () => {
         setCurrentProductIndex((prevIndex) => (prevIndex + 1) % products.length);
         setCurrentImageIndex(0); // Reset image index when product changes
+        window.scrollTo(0, 0); // Scroll to the top after clicked
+    };
+
+    const handlePrevProduct = () => {
+        setCurrentProductIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
+        setCurrentImageIndex(0); // Reset image index when product changes
+        window.scrollTo(0, 0); // Scroll to the top
     };
 
     return (
@@ -74,28 +81,33 @@ export default function ProductViewWrapper() {
             
             {/* PRODUCT IMAGE */}
             {currentProduct.image.length > 0 && (
+            <div className="relative w-full h-[640px] flex items-center justify-center overflow-hidden">
                 <Image 
                     src={currentProduct.image[currentImageIndex]}
-                    width="1000"
-                    height="1000"
+                    layout="fill"
+                    objectFit="cover"
                     alt={currentProduct.name}
-                    className="flex flex-row w-screen"
                 />
+                {/* Navigation Buttons */}
+                {currentProduct.image.length > 1 && (
+                    <>
+                        <button
+                            onClick={handlePrevImage}
+                            className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-30 cursor-pointer hover:bg-opacity-30 hover:bg-white hover:text-gray-500 text-white px-2 py-1 font-bold rounded-full"
+                        >
+                            &lt;
+                        </button>
+                        <button
+                            onClick={handleNextImage}
+                            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-30 cursor-pointer hover:bg-opacity-30 hover:bg-white hover:text-gray-500 text-white px-2 py-1 font-bold rounded-full"
+                        >
+                            &gt;
+                        </button>
+                    </>
+                )}
+            </div>
             )}
 
-            {/* Navigation Buttons */}
-            <button
-                onClick={handlePrevImage}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-50 text-white px-2 py-1 rounded-full"
-            >
-                &lt;
-            </button>
-            <button
-                onClick={handleNextImage}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-50 text-white px-2 py-1 rounded-full"
-            >
-                &gt;
-            </button>
 
             {/* PRODUCT NAME & GUIDE */}
             <div className="flex flex-col items-start w-screen max-w-md pt-2 px-8">
@@ -210,17 +222,27 @@ export default function ProductViewWrapper() {
                 </div>
             </div>
 
+            {/* Previous and Next Product Buttons */}
+            <div className="flex flex-row w-full">
+                <button
+                    onClick={handlePrevProduct}
+                    className="bg-green-900 text-white w-full h-20 cursor-pointer hover:bg-green-800"
+                >
+                    Previous Product
+                </button>
+                <button
+                    onClick={handleNextProduct}
+                    className="bg-green-900 text-white w-full h-20 cursor-pointer hover:bg-green-800"
+                >
+                    Next Product
+                </button>
+            </div>
+
             {/* BOTTOM NAVIGATION */}
             <div className="fixed bottom-0 w-full max-w-md">
                 <BottomNavigation
                     rent={[{ price: currentProduct.rentPrice, days: currentProduct.rentDays }]}
                 />
-                <button
-                    onClick={handleNextProduct}
-                    className="bg-blue-500 text-white px-4 py-2 rounded mt-2 w-full"
-                >
-                    Next Product
-                </button>
             </div>
         </div>
     );
