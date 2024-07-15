@@ -3,9 +3,11 @@ import React from 'react';
 interface RadioButtonProps {
     fitScale: string;
     setFitScale: (value: string) => void;
+    required?: boolean;
+    showErrors?: boolean;
 }
 
-const RadioButton: React.FC<RadioButtonProps> = ({ fitScale, setFitScale }) => {
+const RadioButton: React.FC<RadioButtonProps> = ({ fitScale, setFitScale, required = false, showErrors = false }) => {
     return (
         <div>
             <div className="mt-2">
@@ -44,6 +46,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({ fitScale, setFitScale }) => {
                 />
                 <label htmlFor="large">Large</label>
             </div>
+            {required && showErrors && !fitScale && <p className='text-red-600 text-sm mt-2'>Fit scale is required.</p>}
         </div>
     );
 };

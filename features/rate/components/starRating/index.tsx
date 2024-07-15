@@ -6,25 +6,14 @@ import axios from 'axios';
 interface StarRatingProps {
     userId: number;
     productId: number;
-    value: number; // Menambahkan properti value dengan tipe number
-    onChange: React.Dispatch<React.SetStateAction<number>>; // Menambahkan properti onChange dengan tipe Dispatch<SetStateAction<number>>
+    value: number; 
+    onChange: React.Dispatch<React.SetStateAction<number>>; 
+    required?: boolean;
+    showErrors?: boolean;
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ userId, productId, value, onChange }) => {
+const StarRating: React.FC<StarRatingProps> = ({ userId, productId, value, onChange, required = false, showErrors = false }) => {
     const [hover, setHover] = useState<number>(0);
-
-    useEffect(() => {
-        // Fetch existing rating from dummy API
-        axios.get(`https://jsonplaceholder.typicode.com/posts/${userId}`)  // Using userId for demonstration
-            .then(response => {
-                // Assume the rating value is in response.data.rating
-                // Here, we are just simulating a rating value
-                onChange(response.data.id % 5 + 1);  // Simulate rating based on post ID for example
-            })
-            .catch(error => {
-                console.error("Error fetching rating:", error);
-            });
-    }, [userId, productId, onChange]);
 
     const handleRating = (starValue: number) => {
         onChange(starValue);
@@ -44,25 +33,27 @@ const StarRating: React.FC<StarRatingProps> = ({ userId, productId, value, onCha
     };
 
     return (
-        <div className="flex items-center text-4xl space-x-1">
-            {[...Array(5)].map((_, index) => {
-                const starValue = index + 1;
-                const isHovered = starValue <= (hover || value);
-                return (
-                    <span
-                        key={starValue}
-                        className={`cursor-pointer ${isHovered ? 'text-yellow-500' : 'text-gray-300'}`}
-                        onClick={() => handleRating(starValue)}
-                        onMouseEnter={() => handleHover(starValue)}
-                        onMouseLeave={() => handleHover(value)}
-                    >
-                        ★
-                    </span>
-                );
-            })}
+        <div>
+            <div className="flex items-center text-4xl space-x-1">
+                {[...Array(5)].map((_, index) => {
+                    const starValue = index + 1;
+                    const isHovered = starValue <= (hover || value);
+                    return (
+                        <span
+                            key={starValue}
+                            className={`cursor-pointer ${isHovered ? 'text-yellow-500' : 'text-gray-300'}`}
+                            onClick={() => handleRating(starValue)}
+                            onMouseEnter={() => handleHover(starValue)}
+                            onMouseLeave={() => handleHover(value)}
+                        >
+                            ★
+                        </span>
+                    );
+                })}
+            </div>
+            {required && showErrors && value === 0 && <p className='text-red-600 text-sm mt-2'>Rating is required.</p>}
         </div>
     );
 };
 
 export default StarRating;
-
