@@ -1,5 +1,5 @@
 import React from "react";
-import ViewMoreWrapper from "@/components/features/review/viewMore/viewMoreWrapper";
+import ViewMoreWrapper from "@/features/review/components/viewMore/viewMoreWrapper";
 
 const ReviewsPage: React.FC = () => {
   return (

@@ -45,15 +45,14 @@ const ReviewFilters: React.FC<ReviewFiltersProps> = ({ onFilterChange }) => {
       >
         Newest Reviews
       </button>
-      <div>
+      <div className='px-4 py-2 bg-gray-300'>
         <label htmlFor="rating-filter" className='mr-2'>Rating:</label>
         <select 
           id="rating-filter" 
-          className='px-4 py-2 bg-gray-300' 
           onChange={handleRatingChange} 
           value={filterRating === null ? 'Rating All' : filterRating}
         >
-          <option>Rating: All</option>
+          <option>All</option>
           <option>5 Stars</option>
           <option>4 Stars</option>
           <option>3 Stars</option>
