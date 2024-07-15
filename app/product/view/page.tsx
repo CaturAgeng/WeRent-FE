@@ -84,8 +84,9 @@ export default function ProductViewWrapper() {
             <div className="relative w-full h-[640px] flex items-center justify-center overflow-hidden">
                 <Image 
                     src={currentProduct.image[currentImageIndex]}
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    priority
+                    style={{objectFit: 'cover'}}
                     alt={currentProduct.name}
                 />
                 {/* Navigation Buttons */}
