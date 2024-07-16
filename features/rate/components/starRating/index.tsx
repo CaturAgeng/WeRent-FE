@@ -1,31 +1,29 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { starRatingProps, ratingRequestProps, submitRating } from 'features/rate';
 
-interface StarRatingProps {
-    userId: number;
-    productId: number;
-    value: number; 
-    onChange: React.Dispatch<React.SetStateAction<number>>; 
-    required?: boolean;
-    showErrors?: boolean;
-}
-
-const StarRating: React.FC<StarRatingProps> = ({ userId, productId, value, onChange, required = false, showErrors = false }) => {
+const StarRating: React.FC<starRatingProps> = ({ userId, productId, value, onChange, required = false, showErrors = false }) => {
     const [hover, setHover] = useState<number>(0);
+    const [error, setError] = useState<string | null>(null);
 
     const handleRating = (starValue: number) => {
         onChange(starValue);
-        axios.post('https://jsonplaceholder.typicode.com/posts', {
+        const ratingData: ratingRequestProps = {
             userId,
             productId,
             value: starValue
-        }).then(response => {
-            console.log('Rating saved:', response.data);
-        }).catch(error => {
-            console.error("Error saving rating:", error);
-        });
+        };
+
+        submitRating(ratingData)
+            .then(() => {
+                console.log('Rating submitted successfully!');
+                setError(null); // Clear any previous errors on successful save
+            })
+            .catch(error => {
+                console.error('Error submitting rating:', error.message);
+                setError(error.message || "Unexpected Error");
+            });
     };
 
     const handleHover = (starValue: number) => {
@@ -52,6 +50,7 @@ const StarRating: React.FC<StarRatingProps> = ({ userId, productId, value, onCha
                 })}
             </div>
             {required && showErrors && value === 0 && <p className='text-red-600 text-sm mt-2'>Rating is required.</p>}
+            {error && <p className='text-red-600 text-sm mt-2'>{error}</p>}
         </div>
     );
 };

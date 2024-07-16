@@ -1,4 +1,5 @@
 export * from './starRating';
-export * from './radioButton';
+export * from './fitScale';
+export * from './description';
 export * from './fileInput';
 export * from './rateWrapper';
