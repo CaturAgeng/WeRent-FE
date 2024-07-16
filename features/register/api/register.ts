@@ -4,7 +4,7 @@ import { registerRequestProps } from "features/register";
 
 export async function registerRequest(payload: registerRequestProps) {
     try {
-        const {data} = await axiosInstance.post("/register", payload )
+        const {data} = await axiosInstance.post("auth/register", payload )
         return data
     } catch(error) {
         if (error instanceof AxiosError) {

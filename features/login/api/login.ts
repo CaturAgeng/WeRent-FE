@@ -5,7 +5,7 @@ import { loginRequestProps } from "features/login";
 
 export async function loginRequest( payload : loginRequestProps ) {
     try {
-        const {data} = await axiosInstance.post("/user/login", payload)
+        const {data} = await axiosInstance.post("/auth/login", payload)
         return data
     } catch(error) {
         if (error instanceof AxiosError) {
