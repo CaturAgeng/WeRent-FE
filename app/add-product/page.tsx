@@ -182,6 +182,7 @@ export default function Page() {
                                         type="file" 
                                         id="image-upload" 
                                         accept="image/*"
+                                        placeholder="image-upload"
                                         multiple
                                         onChange={handleImageChange}
                                         className="cursor-pointer text-sm py-8 pl-2 flex w-full border-2 rounded-md border-gray-200 bg-transparent text-gray-800 hover:border-green-900" 
@@ -202,6 +203,7 @@ export default function Page() {
                                         type="file" 
                                         id="video-upload" 
                                         accept="video/*"
+                                        placeholder="video-upload"
                                         onChange={handleVideoChange}
                                         className="cursor-pointer text-sm py-8 pl-2 flex w-full border-2 rounded-md border-gray-200 bg-transparent text-gray-800 hover:border-green-900" 
                                     />
