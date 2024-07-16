@@ -1,5 +1,3 @@
-// 'useClient'
-
 import Link from 'next/link';
 
 interface RentDetailProps {

@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-   
+
       <html lang="en">
         
         <body className={`${montserrat.className} antialiased`}>
@@ -27,7 +27,7 @@ export default function RootLayout({
           </ReactQueryProvider>
           </body>
       </html>
-   
+
     
   );
 }
