@@ -5,7 +5,7 @@ export function HomeWrapper() {
         <div className="flex flex-col justify-center items-center w-full h-full">
             
             {/* TOP NAVIGATION */}
-            <div className="w-full max-w-md h-24 flex-col bg-white border-b-2 z-50">
+            <div className="w-full max-w-md h-24 flex-col z-50">
                 <SearchNavigation />
             </div>
 

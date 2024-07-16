@@ -28,9 +28,11 @@ export default function SearchNavigation() {
     };
 
     return (
-        <div className="w-full max-w-md h-24 flex-col bg-gray-200 border-b-2 z-50">
-            <div className="px-8 w-full h-full flex justify-between items-center">
-                
+        <div className="w-full max-w-md h-24 flex-col bg-gray-200 z-50">
+            <div className="px-6 w-full h-full flex justify-between items-center">
+                <div className="w-8 h-8 bg-black rounded-full">
+                    {/* CUSTOMER PROFILE PICTURE */}
+                </div>
                 
                 {/* SEARCH BUTTON */}
                 <form onSubmit={handleSearchSubmit} className="flex items-center">
