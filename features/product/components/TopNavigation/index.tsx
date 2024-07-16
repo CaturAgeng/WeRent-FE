@@ -1,7 +1,17 @@
 'use client'
 
+import { token } from "config";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
+
 export default function TopNavigation() {
+
+    const router = useRouter()
     const handleLogout = () => {
+
+        Cookies.remove(token)
+        router.push('/login')
+
         // Logic for handling logout, e.g., clearing authentication tokens, redirecting to login page, etc.
         console.log('Logout button clicked');
     };
