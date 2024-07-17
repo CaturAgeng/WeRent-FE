@@ -35,6 +35,8 @@ export default function TopNavigation() {
                             />
                         </svg>
                     </button>
+                    {/* for testing add product only */}
+                    <a href="/add-product">Test Add Product</a>
                     <button
                         onClick={handleLogout}
                         className="rounded-full w-8 h-8 flex items-center bg-red-500 cursor-pointer text-white hover:bg-red-600 focus:outline-none"

@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
 import { TopNavigation } from "features/product";
+import { axiosInstance } from 'api/axiosClients';
 
 export default function AddProductForm() {
     const [sizes, setSizes] = useState(['XS', 'S', 'M', 'L', 'XL']);
@@ -8,6 +9,7 @@ export default function AddProductForm() {
     const [images, setImages] = useState<File[]>([]);
     const [video, setVideo] = useState<File | null>(null);
     const [productName, setProductName] = useState('');
+    const [price, setPrice] = useState<number | ''>('');
     const [productID, setProductID] = useState(Math.random().toString(36).substr(2, 9)); // Generating a random product ID
 
 
@@ -48,6 +50,7 @@ export default function AddProductForm() {
         const formData = new FormData();
         formData.append('productName', productName);
         formData.append('productID', productID);
+        formData.append('price', price.toString());
         formData.append('sizes', JSON.stringify(sizes));
         images.forEach(image => {
             formData.append('images', image);
@@ -57,17 +60,19 @@ export default function AddProductForm() {
         }
 
         try {
-            const response = await fetch('/api/products', {
-                method: 'POST',
-                body: formData,
+            const response = await axiosInstance.post('/product', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
             });
 
-            if (!response.ok) {
+            if (response.status !== 200) {
                 throw new Error('Network response was not ok');
             }
 
-            const result = await response.json();
+            const result = await response.data;
             console.log('Form submitted successfully:', result);
+
             // Reset the form after successful submission
             setProductName('');
             setSizes(['XS', 'S', 'M', 'L', 'XL']);
@@ -106,6 +111,10 @@ export default function AddProductForm() {
                             <label className="text-xl font-medium">Product Name</label>
                             <div className="mt-1 ring-2 rounded-lg ring-gray-200 hover:ring-green-900 ">
                                 <input type="text" name="productname" id="productid" className=" flex w-full rounded-lg py-2 pl-2 text-sm text-gray-800 placeholder:text-gray-400" placeholder="Nike Air Jordan 1 Black Red White..." />
+                            </div>
+                            <label className="text-md font-medium">Description</label>
+                            <div className="mt-1 ring-2 rounded-lg ring-gray-200 hover:ring-green-900 ">
+                                <textarea name="productname" id="productid" className=" flex w-full rounded-lg py-2 pl-2 text-sm text-gray-800 placeholder:text-gray-400" placeholder="Best basketball shoes..." />
                             </div>
                         </div>
 
@@ -165,7 +174,23 @@ export default function AddProductForm() {
                                 </button>
                             </div>
                         </div>
-                        
+
+                        {/* PRICE */}
+                        <div className="mt-2 mb-4">
+                            <label className="text-xl font-medium">Price</label>
+                            <div className="mt-1 ring-2 rounded-md ring-gray-200 hover:ring-green-900 ">
+                                <input 
+                                    type="number" 
+                                    name="price" 
+                                    id="price" 
+                                    className="flex w-full rounded-md py-2 pl-2 text-sm text-gray-800 placeholder:text-gray-400" 
+                                    placeholder="100.00" 
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value ? parseFloat(e.target.value) : '')}
+                                />
+                            </div>
+                        </div>
+
                         {/* IMAGE VIDEO UPLOAD */}
                         <div className="mt-2 mb-4">
                             <label className="text-xl font-medium">Upload Image & Video</label>
