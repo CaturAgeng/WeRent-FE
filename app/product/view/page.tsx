@@ -2,17 +2,17 @@
 
 import Image from "@/node_modules/next/image";
 import { StarRating, ProductSize, ProductSizeDetail, BarGraph, ThumbsUp, BottomNavigation  } from 'features/product'
-import { generateSizeDetail, calculateMeanRating, customers } from "@/app/lib/dummy-data";
-import { useState } from 'react';
-// import { viewProductRequest } from 'features/product'
-// import { Product, Customer } from "features/product";
-import { products } from "@/app/lib/dummy-data";
+import { generateSizeDetail, calculateMeanRating, customers, products } from "@/app/lib/dummy-data";
+import { useState, useEffect } from 'react';
+
+// import for Axios
+// import { viewProductRequest } from 'features/product';
 
 export default function ProductViewWrapper() {
     
-    // GET Data from Axios
-    // const [productData, setProductData] = useState<Product | null>(null);
-    // const [customerData, setCustomerData] = useState<Customer | null>(null);
+    // GET Data from Axios Start
+    // const [productData, setProductData] = useState(null);
+    // const [customerData, setCustomerData] = useState(null);
     // const [error, setError] = useState<string | null>(null);
     
     // useEffect(() => {
@@ -31,14 +31,13 @@ export default function ProductViewWrapper() {
     // }, []);
     
     // if (error) {
-        //     return <div>Error: {error}</div>;
+    //         return <div>Error: {error}</div>;
     // }
     
     // if (!productData || !customerData) {
-        //     return <div>Loading...</div>;
+    //         return <div>Loading...</div>;
     // }
-
-    // const sizeDetail = generateSizeDetail(productData.size);
+    // GET Data from Axios END
 
     const [currentProductIndex, setCurrentProductIndex] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);

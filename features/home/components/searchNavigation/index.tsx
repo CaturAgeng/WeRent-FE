@@ -28,8 +28,8 @@ export default function SearchNavigation() {
     };
 
     return (
-        <div className="w-full max-w-md h-24 flex-col bg-gray-200 z-50">
-            <div className="px-6 w-full h-full flex justify-between items-center">
+        <div className="w-full max-w-md h-24 flex-col bg-white border-b-2 z-50">
+            <div className="px-4 pt-8 w-full h-full flex justify-between items-center">
                 <div className="w-8 h-8 bg-black rounded-full">
                     {/* CUSTOMER PROFILE PICTURE */}
                 </div>
@@ -41,7 +41,7 @@ export default function SearchNavigation() {
                         value={searchQuery}
                         onChange={handleSearchChange}
                         placeholder="Search for products"
-                        className="px-4 py-1 border text-sm border-gray-300 rounded-l-md"
+                        className="px-8 py-1 border text-sm border-gray-300 rounded-l-md"
                     />
                     <button
                         type="submit"
