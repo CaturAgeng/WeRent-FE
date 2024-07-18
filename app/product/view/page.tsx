@@ -11,7 +11,7 @@ import { viewProductRequest } from 'features/product';
 export default function ProductViewWrapper() {
     
     // const [currentProduct, setCurrentProduct] = useState(null);
-    const [currentProductId, setCurrentProductId] = useState('8');
+    const [currentProductId, setCurrentProductId] = useState('3');
     const [currentProductIndex, setCurrentProductIndex] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [error, setError] = useState<string | null>(null);
@@ -19,19 +19,22 @@ export default function ProductViewWrapper() {
         product_name: string,
         sizes: string[],
         price: number,
+        images? : string,
     } | null>(null);
 
     // GET Data from Axios Start
-    
     useEffect(() => {
         const fetchProductData = async () => {
             try {
                 console.log('Fetching product data for productId:', currentProductId);
                 const { product } = await viewProductRequest(currentProductId);
-                const { product_name, sizes, price } = product;
-                setProductData({ product_name, sizes, price });
+                const { product_name, sizes, price, product_pictures  } = product;
+                const images = product_pictures ? [product_pictures] : [];
+                setProductData({ product_name, sizes, price, images });
+                console.log("Fetched product data:", { product_name, sizes, price, images });
             } catch (err: any) {
                 setError(err.message);
+                console.error('Error fetching product data:', err);
             }
         };
     
@@ -45,11 +48,9 @@ export default function ProductViewWrapper() {
     if (!productData) {
             return <div className="pt-64 h-full w-full font-semibold flex flex-auto justify-center items-center">Loading...</div>;
     }
-
     // GET Data from Axios END
 
-    const currentProduct = products[currentProductIndex];
-    
+    const currentProduct = products[currentProductIndex];    
     const sizeDetail = generateSizeDetail(productData.sizes);
     const meanRating = calculateMeanRating(customers);
 
@@ -61,13 +62,13 @@ export default function ProductViewWrapper() {
     ];
 
     // BUTTON HANDLER HERE
-    const handleNextImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % currentProduct.image.length);
-    };
+    // const handleNextImage = () => {
+    //     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % currentProduct.image.length);
+    // };
 
-    const handlePrevImage = () => {
-        setCurrentImageIndex((prevIndex) => (prevIndex - 1 + currentProduct.image.length) % currentProduct.image.length);
-    };
+    // const handlePrevImage = () => {
+    //     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + currentProduct.image.length) % currentProduct.image.length);
+    // };
 
     const handleNextProduct = () => {
         setCurrentProductIndex((prevIndex) => (prevIndex + 1) % products.length);
@@ -81,23 +82,33 @@ export default function ProductViewWrapper() {
         window.scrollTo(0, 0); // Scroll to the top
     };
 
+    const fallbackImage = '/dummy/no_image.jpg'
+    const imageUrl = productData.images ? productData.images[0] : fallbackImage;
+
+    console.log("Current image URL:", imageUrl);
+
     return (
         <div className="flex w-screen max-w-md items-center justify-start h-full flex-col overflow-hidden scroll-smooth">
             
             {/* PRODUCT IMAGE */}
-            {currentProduct.image.length > 0 && (
+            {/* {currentProduct.image.length > 0 && ( */}
             <div className="relative w-full h-[640px] flex items-center justify-center overflow-hidden">
                 <Image 
-                    src={currentProduct.image[currentImageIndex]}
+                    src={imageUrl}
+                    // src={currentProduct.image[currentImageIndex]}
                     fill
                     priority
                     style={{objectFit: 'cover'}}
                     alt={productData.product_name}
+                    onError={(e) => {
+                        e.currentTarget.src = fallbackImage; // Use fallback image on error
+                        console.error('Error loading image:', e);
+                    }}
                 />
                 {/* Navigation Buttons */}
-                {currentProduct.image.length > 1 && (
+                {/* {currentProduct.image.length > 1 && ( */}
                     <>
-                        <button
+                        {/* <button
                             onClick={handlePrevImage}
                             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-30 cursor-pointer hover:bg-opacity-30 hover:bg-white hover:text-gray-500 text-white px-2 py-1 font-bold rounded-full"
                         >
@@ -108,11 +119,11 @@ export default function ProductViewWrapper() {
                             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-30 cursor-pointer hover:bg-opacity-30 hover:bg-white hover:text-gray-500 text-white px-2 py-1 font-bold rounded-full"
                         >
                             &gt;
-                        </button>
+                        </button> */}
                     </>
-                )}
+                {/* )} */}
             </div>
-            )}
+            {/* )} */}
 
 
             {/* PRODUCT NAME & GUIDE */}

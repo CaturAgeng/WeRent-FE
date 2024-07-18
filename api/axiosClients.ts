@@ -13,13 +13,17 @@ export const axiosInstance = axios.create({
     },
 });
 
-console.log(axiosInstance)
+console.log("Initial axiosInstance configuration:",axiosInstance)
+
 axiosInstance.interceptors.request.use(
     (config) => {
         const auth = Cookies.get(token);
+        console.log("Auth token from cookies:", auth);
 
-        if (auth) { config.headers.Authorization = `Bearer ${auth}`;
-        }  else {
+        if (auth) { 
+            config.headers.Authorization = `Bearer ${auth}`;
+        }  
+        else {
             console.warn("token not found")
         } 
         return config;
