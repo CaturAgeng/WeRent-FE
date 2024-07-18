@@ -2,23 +2,23 @@ import { Product, Customer } from "features/product";
 
 export const products: Product[] = [
     { 
-        id: '01',
-        name: 'Black Kaftan with Embellishment',
+        product_id: '01',
+        product_name: 'Black Kaftan with Embellishment',
         image: ['/dummy/contohAbaya.png', '/dummy/contohAbaya2.png'],
-        size: ['XS','S','M','L','XL'],
+        sizes: ['XS','S','M','L','XL'],
         rating: 4,
         review: 100,
-        rentPrice: '300.000',
+        rentPrice: 300000,
         rentDays: 4,
     },
     { 
-        id: '02',
-        name: '1991 G Wagon 300GF W 463 2 Door Full Spec',
+        product_id: '02',
+        product_name: '1991 G Wagon 300GF W 463 2 Door Full Spec',
         image: ['/dummy/contohMobil.png'],
-        size: ['Clean'],
+        sizes: ['Clean'],
         rating: 5,
         review: 50,
-        rentPrice: '1.500.000',
+        rentPrice: 1500000,
         rentDays: 1,
     },
 ];
@@ -40,9 +40,9 @@ export const customers: Customer[] = [
 
 // SIZE DETAIL
 export const generateSizeDetail = (sizes: string[]) => {
-    return sizes.map((size) => {
+    return sizes.map((sizes) => {
         let bustSize, lengthSize;
-        switch (size) {
+        switch (sizes) {
             case 'XS':
                 bustSize = '74';
                 lengthSize = '87';
@@ -67,7 +67,7 @@ export const generateSizeDetail = (sizes: string[]) => {
                 bustSize = 'N/A';
                 lengthSize = 'N/A';
         }
-        return { size, bustSize, lengthSize };
+        return { sizes, bustSize, lengthSize };
     });
 };
 

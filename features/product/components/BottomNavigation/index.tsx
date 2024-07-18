@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 interface RentDetailProps {
-    rent: { price: string; days: number }[];
+    rent: { price: number; days: number }[];
 }
 
 export default function BottomNavigation({ rent }: RentDetailProps) {

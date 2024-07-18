@@ -6,45 +6,51 @@ import { generateSizeDetail, calculateMeanRating, customers, products } from "@/
 import { useState, useEffect } from 'react';
 
 // import for Axios
-// import { viewProductRequest } from 'features/product';
+import { viewProductRequest } from 'features/product';
 
 export default function ProductViewWrapper() {
     
-    // GET Data from Axios Start
-    // const [productData, setProductData] = useState(null);
-    // const [customerData, setCustomerData] = useState(null);
-    // const [error, setError] = useState<string | null>(null);
-    
-    // useEffect(() => {
-    //     const fetchProductData = async () => {
-    //         try {
-    //             console.log('Fetching product data...');
-    //             const { product, customer } = await viewProductRequest('01', '01');
-    //             setProductData(product);
-    //             setCustomerData(customer);
-    //         } catch (err) {
-    //             setError(err.message);
-    //         }
-    //     };
-    
-    //     fetchProductData();
-    // }, []);
-    
-    // if (error) {
-    //         return <div>Error: {error}</div>;
-    // }
-    
-    // if (!productData || !customerData) {
-    //         return <div>Loading...</div>;
-    // }
-    // GET Data from Axios END
-
+    // const [currentProduct, setCurrentProduct] = useState(null);
+    const [currentProductId, setCurrentProductId] = useState('8');
     const [currentProductIndex, setCurrentProductIndex] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [error, setError] = useState<string | null>(null);
+    const [productData, setProductData] = useState<{ 
+        product_name: string,
+        sizes: string[],
+        price: number,
+    } | null>(null);
+
+    // GET Data from Axios Start
+    
+    useEffect(() => {
+        const fetchProductData = async () => {
+            try {
+                console.log('Fetching product data for productId:', currentProductId);
+                const { product } = await viewProductRequest(currentProductId);
+                const { product_name, sizes, price } = product;
+                setProductData({ product_name, sizes, price });
+            } catch (err: any) {
+                setError(err.message);
+            }
+        };
+    
+        fetchProductData();
+    }, [currentProductId]);
+    
+    if (error) {
+            return <div className="pt-64 h-full w-full font-semibold flex flex-auto justify-center items-center">Error: {error}</div>;
+    }
+    
+    if (!productData) {
+            return <div className="pt-64 h-full w-full font-semibold flex flex-auto justify-center items-center">Loading...</div>;
+    }
+
+    // GET Data from Axios END
 
     const currentProduct = products[currentProductIndex];
     
-    const sizeDetail = generateSizeDetail(currentProduct.size);
+    const sizeDetail = generateSizeDetail(productData.sizes);
     const meanRating = calculateMeanRating(customers);
 
     // INTEGRATE THE BAR DATA 
@@ -86,7 +92,7 @@ export default function ProductViewWrapper() {
                     fill
                     priority
                     style={{objectFit: 'cover'}}
-                    alt={currentProduct.name}
+                    alt={productData.product_name}
                 />
                 {/* Navigation Buttons */}
                 {currentProduct.image.length > 1 && (
@@ -113,7 +119,7 @@ export default function ProductViewWrapper() {
             <div className="flex flex-col items-start w-screen max-w-md pt-2 px-8">
                 
                 {/* Product Name */}
-                <h1 className="text-2xl font-semibold mt-2">{currentProduct.name}</h1>
+                <h1 className="text-2xl font-semibold mt-2">{productData.product_name}</h1>
                 
                 {/* Product Review Rating */}
                 <div className="flex flex-row gap-2 py-4 pr-4 items-center">
@@ -124,7 +130,8 @@ export default function ProductViewWrapper() {
                 </div>
                 
                 {/* Product Size & Guide */}
-                <ProductSize sizes={currentProduct.size} />
+                <ProductSize sizes={productData.sizes} />
+                
             </div>
 
             {/* PRODUCT DESIGNER */}
@@ -241,7 +248,7 @@ export default function ProductViewWrapper() {
             {/* BOTTOM NAVIGATION */}
             <div className="fixed bottom-0 w-full max-w-md">
                 <BottomNavigation
-                    rent={[{ price: currentProduct.rentPrice, days: currentProduct.rentDays }]}
+                    rent={[{ price: productData.price, days: currentProduct.rentDays }]}
                 />
             </div>
         </div>

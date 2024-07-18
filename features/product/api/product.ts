@@ -1,19 +1,19 @@
 import { axiosInstance } from 'api/axiosClients';
 import { AxiosError } from 'axios';
 
-export async function viewProductRequest(productId: string, customerId: string) {
+export async function viewProductRequest(productId: string) {
     try {
-        console.log(`Requesting product data for productId: ${productId} and customerId: ${customerId}`);
+        console.log(`Requesting product data for productId: ${productId}`);
         
         const productRequest = axiosInstance.get(`/product/${productId}`);
-        const customerRequest = axiosInstance.get(`/customer/${customerId}`);
+        // const customerRequest = axiosInstance.get(`/customer/${customerId}`);
 
-        const [productResponse, customerResponse] = await Promise.all([productRequest, customerRequest]);
+        const [productResponse] = await Promise.all([productRequest]);
 
-        const product = productResponse.data;
-        const customer = customerResponse.data;
+        const product = productResponse.data.data;
+        // const customer = customerResponse.data;
 
-        return { product, customer };
+        return {product};
     } catch (error) {
         console.error('Error in viewProductRequest:', error);
         if (error instanceof AxiosError) {
