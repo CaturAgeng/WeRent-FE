@@ -10,8 +10,8 @@ export async function submitRating(ratingData: ratingRequestProps): Promise<void
     } catch (error) {
         if (error instanceof AxiosError) {
             const { response } = error;
-            throw new Error(response?.data?.error?.message || "Failed to save rating.");
+            // throw new Error(response?.data?.error?.message || "Failed to save rating.");
         }
-        throw new Error("Unexpected Error");
+        // throw new Error("Unexpected Error");
     }
 }

@@ -24,7 +24,7 @@ export function LoginForm() {
   const {mutate} = useMutation({
     mutationFn: ( payload : loginRequestProps) => loginRequest(payload),
     onSuccess: (data) => {
-        const {access_token} = data
+        const {access_token} = data.data
         console.log("login success, received token", access_token)
         Cookies.set(token, access_token);
         console.log("token is set in cookies, now redirecting to product page")
