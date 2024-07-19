@@ -11,15 +11,19 @@ import { viewProductRequest } from 'features/product';
 export default function ProductViewWrapper() {
     
     // const [currentProduct, setCurrentProduct] = useState(null);
-    const [currentProductId, setCurrentProductId] = useState('3');
+    const [currentProductId, setCurrentProductId] = useState('1');
     const [currentProductIndex, setCurrentProductIndex] = useState(0);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [error, setError] = useState<string | null>(null);
     const [productData, setProductData] = useState<{ 
         product_name: string,
+        product_desc: string,
         sizes: string[],
         price: number,
-        images? : string,
+        images? : any[],
+        rent_duration : number,
+        ratings?: { ratingValue: number }[],
+        reviews?: { description: string, fit_scale: string, createdAt: string }[],
     } | null>(null);
 
     // GET Data from Axios Start
@@ -28,10 +32,9 @@ export default function ProductViewWrapper() {
             try {
                 console.log('Fetching product data for productId:', currentProductId);
                 const { product } = await viewProductRequest(currentProductId);
-                const { product_name, sizes, price, product_pictures  } = product;
+                const { product_name, product_desc, sizes, price, product_pictures, rent_duration, ratings, reviews  } = product;
                 const images = product_pictures ? [product_pictures] : [];
-                setProductData({ product_name, sizes, price, images });
-                console.log("Fetched product data:", { product_name, sizes, price, images });
+                setProductData({ product_name, product_desc, sizes, price, images, rent_duration, ratings, reviews });
             } catch (err: any) {
                 setError(err.message);
                 console.error('Error fetching product data:', err);
@@ -50,9 +53,14 @@ export default function ProductViewWrapper() {
     }
     // GET Data from Axios END
 
-    const currentProduct = products[currentProductIndex];    
+    const currentProduct = products[currentProductIndex];
+        
     const sizeDetail = generateSizeDetail(productData.sizes);
-    const meanRating = calculateMeanRating(customers);
+    const ratings = productData.ratings || [];
+    const meanRating = ratings.length > 0 ? ratings.reduce((sum, r) => sum + r.ratingValue, 0) / ratings.length : 0;
+    const reviews = productData.reviews || [];
+
+    const userRating = ratings.find(rating => rating.userId === 2)?.ratingValue || 0;
 
     // INTEGRATE THE BAR DATA 
     const barData = [
@@ -129,15 +137,16 @@ export default function ProductViewWrapper() {
             {/* PRODUCT NAME & GUIDE */}
             <div className="flex flex-col items-start w-screen max-w-md pt-2 px-8">
                 
-                {/* Product Name */}
+                {/* Product Name & Desc */}
                 <h1 className="text-2xl font-semibold mt-2">{productData.product_name}</h1>
+                <p className="text-gray-400 text-sm font-medium mt-2">{productData.product_desc}</p>
                 
                 {/* Product Review Rating */}
                 <div className="flex flex-row gap-2 py-4 pr-4 items-center">
                     <StarRating 
                         rate={meanRating}
                     />
-                    <p className="text-xs text-gray-400">{currentProduct.review} REVIEW(S)</p>
+                    <p className="text-xs text-gray-400">{reviews.length} REVIEW(S)</p>
                 </div>
                 
                 {/* Product Size & Guide */}
@@ -199,7 +208,7 @@ export default function ProductViewWrapper() {
             <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
                 <div className="bg-gray-00 w-full h-0.5 my-1"></div>
                 <div className="flex w-full justify-between items-center">
-                    <h1 className="text-s font-bold">REVIEWS ({currentProduct.review})</h1>
+                    <h1 className="text-s font-bold">REVIEWS ({reviews.length})</h1>
                     <a className="text-xs text-green-900 font-semibold underline" href="/review">View More</a>
                 </div>
                 <div className="p-1 w-full">
@@ -217,28 +226,30 @@ export default function ProductViewWrapper() {
                     <div className="bg-gray-200 w-5/6 h-0.5"></div>
                 </div>
             </div>
-
-            <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
-                <div className="flex flex-row w-full justify-between items-center">
-                    <div className="flex flex-row items-center gap-4">
-                        <div className="bg-black w-7 h-7 rounded-full"></div>
-                        <div className="flex flex-col gap-2">
-                            {/* USER RATING */}
-                            <StarRating 
-                                rate={customers[0].rating}
-                                size="w-4 h-4"
-                                gap="gap-0.5"
-                            />
-                            <p className="text-xs text-gray-400">Size Detail</p>
+            
+            {reviews.map((review, index) => (
+                <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
+                    <div className="flex flex-row w-full justify-between items-center">
+                        <div className="flex flex-row items-center gap-4">
+                            <div className="bg-black w-7 h-7 rounded-full"></div>
+                            <div className="flex flex-col gap-2">
+                                {/* USER RATING */}
+                                <StarRating 
+                                    rate={userRating}
+                                    size="w-4 h-4"
+                                    gap="gap-0.5"
+                                />
+                                <p className="text-xs text-gray-400">{review.fit_scale}</p>
+                            </div>
                         </div>
+                        <ThumbsUp />
                     </div>
-                    <ThumbsUp />
+                    <div className="flex flex-col ">
+                        <p className="text-sm py-2">{review.description}</p>
+                        <p className="text-xs text-gray-400">{new Date(review.createdAt).toLocaleDateString()}</p>
+                    </div>
                 </div>
-                <div className="flex flex-col ">
-                    <p className="text-sm py-2">This black kaftan is a wardrobe staple for me now! The quality is outstanding, and it&apos;s incredibly versatile. ...</p>
-                    <p className="text-xs text-gray-400">Nov 29. 2023</p>
-                </div>
-            </div>
+            ))};
 
             {/* Previous and Next Product Buttons */}
             <div className="flex flex-row w-full">
@@ -259,7 +270,7 @@ export default function ProductViewWrapper() {
             {/* BOTTOM NAVIGATION */}
             <div className="fixed bottom-0 w-full max-w-md">
                 <BottomNavigation
-                    rent={[{ price: productData.price, days: currentProduct.rentDays }]}
+                    rent={[{ price: productData.price, days: productData.rent_duration }]}
                 />
             </div>
         </div>
