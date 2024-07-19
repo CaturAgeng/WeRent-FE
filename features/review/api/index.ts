@@ -1,1 +1,1 @@
-export from "./reviewpage"
+export * from "./reviewpage"
