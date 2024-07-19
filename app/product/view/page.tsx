@@ -11,9 +11,10 @@ import { viewProductRequest } from 'features/product';
 export default function ProductViewWrapper() {
     
     // const [currentProduct, setCurrentProduct] = useState(null);
+    // const [currentProductIndex, setCurrentProductIndex] = useState(0);
+    // const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
     const [currentProductId, setCurrentProductId] = useState('1');
-    const [currentProductIndex, setCurrentProductIndex] = useState(0);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [error, setError] = useState<string | null>(null);
     const [productData, setProductData] = useState<{ 
         product_name: string,
@@ -22,9 +23,14 @@ export default function ProductViewWrapper() {
         price: number,
         images? : any[],
         rent_duration : number,
-        ratings?: { ratingValue: number }[],
-        reviews?: { description: string, fit_scale: string, createdAt: string }[],
+        ratings?: {
+            userId: number; ratingValue: number 
+        }[],
+        reviews?: {
+            user_id: number; description: string, fit_scale: string, createdAt: string 
+        }[],
     } | null>(null);
+    const [loadingImage, setLoadingImage] = useState<boolean>(true);
 
     // GET Data from Axios Start
     useEffect(() => {
@@ -35,13 +41,16 @@ export default function ProductViewWrapper() {
                 const { product_name, product_desc, sizes, price, product_pictures, rent_duration, ratings, reviews  } = product;
                 const images = product_pictures ? [product_pictures] : [];
                 setProductData({ product_name, product_desc, sizes, price, images, rent_duration, ratings, reviews });
+                setLoadingImage(false);
             } catch (err: any) {
                 setError(err.message);
                 console.error('Error fetching product data:', err);
+                setLoadingImage(false);
             }
         };
     
         fetchProductData();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [currentProductId]);
     
     if (error) {
@@ -53,7 +62,7 @@ export default function ProductViewWrapper() {
     }
     // GET Data from Axios END
 
-    const currentProduct = products[currentProductIndex];
+    // const currentProduct = products[currentProductIndex];
         
     const sizeDetail = generateSizeDetail(productData.sizes);
     const ratings = productData.ratings || [];
@@ -61,6 +70,7 @@ export default function ProductViewWrapper() {
     const reviews = productData.reviews || [];
 
     const userRating = ratings.find(rating => rating.userId === 2)?.ratingValue || 0;
+    const userReviews = reviews.filter(review => review.user_id === 2);
 
     // INTEGRATE THE BAR DATA 
     const barData = [
@@ -78,20 +88,37 @@ export default function ProductViewWrapper() {
     //     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + currentProduct.image.length) % currentProduct.image.length);
     // };
 
+    const products = ["1", "2", "3"];
     const handleNextProduct = () => {
-        setCurrentProductIndex((prevIndex) => (prevIndex + 1) % products.length);
-        setCurrentImageIndex(0); // Reset image index when product changes
-        window.scrollTo(0, 0); // Scroll to the top after clicked
+        const currentIndex = products.indexOf(currentProductId);
+        const nextIndex = (currentIndex + 1) % products.length;
+        setCurrentProductId(products[nextIndex]);
     };
 
     const handlePrevProduct = () => {
-        setCurrentProductIndex((prevIndex) => (prevIndex - 1 + products.length) % products.length);
-        setCurrentImageIndex(0); // Reset image index when product changes
-        window.scrollTo(0, 0); // Scroll to the top
+        const currentIndex = products.indexOf(currentProductId);
+        const prevIndex = (currentIndex - 1 + products.length) % products.length;
+        setCurrentProductId(products[prevIndex]);
     };
 
-    const fallbackImage = '/dummy/no_image.jpg'
+    const fallbackImage = '/dummy/no_image.png'
     const imageUrl = productData.images ? productData.images[0] : fallbackImage;
+
+    // CHANGE DATA FORMAT FROM BE TO FE
+    const formattedPrice = productData.price.toLocaleString('id-ID', { 
+        style: 'currency',
+        currency: 'IDR',
+        minimumFractionDigits: 0 
+    });
+
+    const formatDate = (dateString: string) => {
+        const options: Intl.DateTimeFormatOptions = { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    };
 
     console.log("Current image URL:", imageUrl);
 
@@ -101,6 +128,11 @@ export default function ProductViewWrapper() {
             {/* PRODUCT IMAGE */}
             {/* {currentProduct.image.length > 0 && ( */}
             <div className="relative w-full h-[640px] flex items-center justify-center overflow-hidden">
+                {loadingImage ? (
+                    <div className="absolute bg-gray-500 w-full h-full flex items-center justify-center">
+                        <p className="text-white text-xl font-semibold">Loading image...</p>
+                    </div>
+                ) : null}
                 <Image 
                     src={imageUrl}
                     // src={currentProduct.image[currentImageIndex]}
@@ -227,29 +259,30 @@ export default function ProductViewWrapper() {
                 </div>
             </div>
             
-            {reviews.map((review, index) => (
-                <div className="flex flex-col items-start w-screen max-w-md py-2 px-8">
-                    <div className="flex flex-row w-full justify-between items-center">
-                        <div className="flex flex-row items-center gap-4">
-                            <div className="bg-black w-7 h-7 rounded-full"></div>
-                            <div className="flex flex-col gap-2">
-                                {/* USER RATING */}
-                                <StarRating 
-                                    rate={userRating}
-                                    size="w-4 h-4"
-                                    gap="gap-0.5"
-                                />
-                                <p className="text-xs text-gray-400">{review.fit_scale}</p>
-                            </div>
-                        </div>
-                        <ThumbsUp />
-                    </div>
-                    <div className="flex flex-col ">
-                        <p className="text-sm py-2">{review.description}</p>
-                        <p className="text-xs text-gray-400">{new Date(review.createdAt).toLocaleDateString()}</p>
-                    </div>
+            {userReviews.length === 0 ? (
+                <div className="flex flex-col items-center w-screen max-w-md py-2 px-8">
+                    <p className="text-sm py-2 text-gray-400 font-semibold">No review yet</p>
                 </div>
-            ))};
+            ) : (
+                userReviews.map((review, index) => (
+                    <div key={index} className="flex flex-col items-start w-screen max-w-md py-2 px-8">
+                        <div className="flex flex-row w-full justify-between items-center">
+                            <div className="flex flex-row items-center gap-4">
+                                <div className="bg-black w-7 h-7 rounded-full"></div>
+                                <div className="flex flex-col gap-2">
+                                    <StarRating rate={userRating} size="w-4 h-4" gap="gap-0.5" />
+                                    <p className="text-xs text-gray-400">{review.fit_scale}</p>
+                                </div>
+                            </div>
+                            <ThumbsUp />
+                        </div>
+                        <div className="flex flex-col ">
+                            <p className="text-sm py-2">{review.description}</p>
+                            <p className="text-xs text-gray-400">{formatDate(review.createdAt)}</p>
+                        </div>
+                    </div>
+                ))
+            )};
 
             {/* Previous and Next Product Buttons */}
             <div className="flex flex-row w-full">
@@ -270,7 +303,7 @@ export default function ProductViewWrapper() {
             {/* BOTTOM NAVIGATION */}
             <div className="fixed bottom-0 w-full max-w-md">
                 <BottomNavigation
-                    rent={[{ price: productData.price, days: productData.rent_duration }]}
+                    rent={[{ price: formattedPrice, days: productData.rent_duration }]}
                 />
             </div>
         </div>

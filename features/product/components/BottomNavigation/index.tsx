@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 interface RentDetailProps {
-    rent: { price: number; days: number }[];
+    rent: { price: any; days: number }[];
 }
 
 export default function BottomNavigation({ rent }: RentDetailProps) {
@@ -15,7 +15,7 @@ export default function BottomNavigation({ rent }: RentDetailProps) {
                     </div>
                     <div className="h-2/4 flex items-center">
                         {rent.map((rentDetail, index) =>(
-                            <h1 key={index} >Rp {rentDetail.price}/{rentDetail.days} Day</h1>
+                            <h1 key={index} >{rentDetail.price}/{rentDetail.days} Day</h1>
                         ))}
                     </div>
                     <div className="h-1/4 items-center"></div>
