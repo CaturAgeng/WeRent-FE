@@ -61,26 +61,26 @@ const ReviewSummary: React.FC<ReviewSummaryProps> = ({ reviews, setFilteredRevie
       </div>
       <div className="mt-4 flex flex-wrap justify-between space-y-2 sm:space-y-0 sm:space-x-2 relative">
         <button
-          className={`py-3 px-6 w-full sm:w-auto ${selectedFilter === 'All Reviews' ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+          className={`py-3 px-6 w-full sm:w-auto ${selectedFilter === 'All Reviews' ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-700'} text-sm`}
           onClick={() => handleButtonClick('All Reviews')}
         >
           All Reviews
         </button>
         <button
-          className={`py-3 px-6 w-full sm:w-auto ${selectedFilter === 'Photos/Videos' ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+          className={`py-3 px-6 w-full sm:w-auto ${selectedFilter === 'Photos/Videos' ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-700'} text-sm`}
           onClick={() => handleButtonClick('Photos/Videos')}
         >
           Photos/Videos
         </button>
         <button
-          className={`py-3 px-6 w-full sm:w-auto ${selectedFilter === 'Newest Reviews' ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+          className={`py-3 px-6 w-full sm:w-auto ${selectedFilter === 'Newest Reviews' ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-700'} text-sm`}
           onClick={() => handleButtonClick('Newest Reviews')}
         >
           Newest Reviews
         </button>
         <div className="relative w-full sm:w-auto">
           <button
-            className={`py-3 px-6 w-full sm:w-auto ${selectedFilter.includes('Star') ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-700'}`}
+            className={`py-3 px-6 w-full sm:w-auto ${selectedFilter.includes('Star') ? 'bg-yellow-500 text-white' : 'bg-gray-300 text-gray-700'} text-sm`}
             onClick={() => setShowDropdown(!showDropdown)}
           >
             {selectedFilter.includes('Star') ? selectedFilter : 'Rating: All'} ▼
