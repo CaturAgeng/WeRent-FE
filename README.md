@@ -27,7 +27,6 @@ pnpm dev
 bun dev
 ```
 
-
 Open [http://localhost:3000/product](http://localhost:3000/product) with your browser to see the result.
 
 ## Learn More

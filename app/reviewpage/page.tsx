@@ -3,7 +3,19 @@
 import Head from 'next/head';
 import ReviewSummary from '@/features/review/components/viewMore/reviewSummary';
 import ReviewCard from '@/features/review/components/viewMore/reviewCard';
-import { Review } from '@/features/review/type';
+
+interface Review {
+  id: number;
+  userImage: string;
+  rating: number;
+  date: string;
+  height: number;
+  weight: number;
+  measurements: string;
+  review: string;
+  helpful: number;
+  productImage?: string;
+}
 
 const reviews: Review[] = [
   {
