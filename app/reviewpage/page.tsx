@@ -17,6 +17,11 @@ interface Review {
   productImage?: string;
 }
 
+interface ReviewSummary {
+  setFilteredReviews: (reviews: Review[]) => void; // Function to update filtered reviews
+}
+
+
 const ReviewPage: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +52,7 @@ const ReviewPage: React.FC = () => {
         <title>Reviews</title>
       </Head>
       <div className="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden md:max-w-2xl">
-        <ReviewSummary />
+        <ReviewSummary reviews={[]} />
         <div className="border-t">
           {reviews.map(review => (
             <ReviewCard key={review.review_id} review={review} />

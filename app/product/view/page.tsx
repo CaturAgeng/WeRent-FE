@@ -91,7 +91,7 @@ export default function ProductViewWrapper() {
         setCurrentMediaIndex((prevIndex) => (prevIndex - 1 + media.length) % media.length);
     };
 
-    const products = ["1", "2", "3"];
+    const products = ["1", "2", "3", "4", "5", "6", "7"];
     const handleNextProduct = () => {
         const currentIndex = products.indexOf(currentProductId);
         const nextIndex = (currentIndex + 1) % products.length;
