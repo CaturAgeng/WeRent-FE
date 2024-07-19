@@ -37,7 +37,6 @@ export default function ProductViewWrapper() {
     useEffect(() => {
         const fetchProductData = async () => {
             try {
-                console.log('Fetching product data for productId:', currentProductId);
                 const { product } = await viewProductRequest(currentProductId);
                 const { product_name, product_desc, sizes, price, product_pictures, rent_duration, ratings, reviews  } = product;
                 const images = product_pictures ? [product_pictures] : [];
@@ -122,8 +121,6 @@ export default function ProductViewWrapper() {
         };
         return new Date(dateString).toLocaleDateString('en-US', options);
     };
-
-    console.log("Current image URL:", imageUrl);
 
     return (
         <div className="flex w-screen max-w-md items-center justify-start h-full flex-col overflow-hidden scroll-smooth">
@@ -244,7 +241,7 @@ export default function ProductViewWrapper() {
                 <div className="bg-gray-00 w-full h-0.5 my-1"></div>
                 <div className="flex w-full justify-between items-center">
                     <h1 className="text-s font-bold">REVIEWS ({reviews.length})</h1>
-                    <a className="text-xs text-green-900 font-semibold underline" href="/review">View More</a>
+                    <a className="text-xs text-green-900 font-semibold underline" href="/reviewpage">View More</a>
                 </div>
                 <div className="p-1 w-full">
                     <div className="flex justify-start">

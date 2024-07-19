@@ -3,8 +3,6 @@ import { AxiosError } from 'axios';
 
 export async function viewProductRequest(productId: string) {
     try {
-        console.log(`Requesting product data for productId: ${productId}`);
-        
         const productRequest = axiosInstance.get(`/product/${productId}`);
         // const customerRequest = axiosInstance.get(`/customer/${customerId}`);
 
