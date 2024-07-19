@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { ReviewSummaryProps } from '@/features/review/type';
 
-const ReviewSummary: React.FC<ReviewSummaryProps> = ({ reviews, setFilteredReviews }) => {
+const ReviewSummary: React.FC<ReviewSummaryProps> = ({ reviews }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedFilter, setSelectedFilter] = useState<string>('All Reviews');
 
   const handleFilter = (rating: number) => {
     const filtered = reviews.filter(review => review.rating === rating);
-    setFilteredReviews(filtered);
+    // setFilteredReviews(filtered);
     setShowDropdown(false);
     setSelectedFilter(`${rating} Star`);
   };
@@ -15,7 +15,7 @@ const ReviewSummary: React.FC<ReviewSummaryProps> = ({ reviews, setFilteredRevie
   const handleButtonClick = (filter: string) => {
     setSelectedFilter(filter);
     if (filter === 'All Reviews') {
-      setFilteredReviews(reviews); // Reset to show all reviews
+      // setFilteredReviews(reviews); // Reset to show all reviews
     }
   };
 

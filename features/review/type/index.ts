@@ -30,5 +30,4 @@ export type ReviewCardProps = {
 
 export type ReviewSummaryProps = {
     reviews: Review[];
-    setFilteredReviews: (reviews: Review[]) => void;
   }
