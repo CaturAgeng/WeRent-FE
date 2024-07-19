@@ -49,6 +49,8 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           <span className="ml-1 text-gray-600">{likes}</span>
         </div>
       </div>
+
+      {/* COMMENT TEXT */}
       <p className="text-gray-700 mb-2">
         {isExpanded ? review.review : truncatedReview}
         {!isExpanded && (
@@ -60,6 +62,7 @@ const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
           </button>
         )}
       </p>
+      
       <div>
         <img
           src={productImageSrc}

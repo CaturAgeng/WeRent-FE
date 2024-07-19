@@ -1,8 +1,8 @@
 'use client';
 
 import Head from 'next/head';
-import ReviewSummary from './components/reviewsummary';
-import ReviewCard from './components/reviewcard';
+import ReviewSummary from '@/features/review/components/viewMore/reviewSummary';
+import ReviewCard from '@/features/review/components/viewMore/reviewCard';
 
 interface Review {
   id: number;
