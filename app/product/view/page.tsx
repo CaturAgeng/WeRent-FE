@@ -22,6 +22,7 @@ export default function ProductViewWrapper() {
         sizes: string[],
         price: number,
         images? : any[],
+        videos?: string[],
         rent_duration : number,
         ratings?: {
             userId: number; ratingValue: number 
@@ -31,6 +32,7 @@ export default function ProductViewWrapper() {
         }[],
     } | null>(null);
     const [loadingImage, setLoadingImage] = useState<boolean>(true);
+    const [currentMediaIndex, setCurrentMediaIndex] = useState(0);
 
     // GET Data from Axios Start
     useEffect(() => {
@@ -38,9 +40,10 @@ export default function ProductViewWrapper() {
             try {
                 console.log('Fetching product data for productId:', currentProductId);
                 const { product } = await viewProductRequest(currentProductId);
-                const { product_name, product_desc, sizes, price, product_pictures, rent_duration, ratings, reviews  } = product;
+                const { product_name, product_desc, sizes, price, product_pictures, product_videos, rent_duration, ratings, reviews  } = product;
                 const images = product_pictures ? [product_pictures] : [];
-                setProductData({ product_name, product_desc, sizes, price, images, rent_duration, ratings, reviews });
+                const videos = product_videos || [];
+                setProductData({ product_name, product_desc, sizes, price, images, videos, rent_duration, ratings, reviews });
                 setLoadingImage(false);
             } catch (err: any) {
                 setError(err.message);
@@ -79,16 +82,19 @@ export default function ProductViewWrapper() {
         { label: 'Large', percentage: 13},
     ];
 
+    const media = [...(productData.images || []), ...(productData.videos || [])];
+    const isVideo = (url: string) => url.endsWith('.mp4') || url.endsWith('.webm');
+
     // BUTTON HANDLER HERE
-    // const handleNextImage = () => {
-    //     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % currentProduct.image.length);
-    // };
+    const handleNextMedia = () => {
+        setCurrentMediaIndex((prevIndex) => (prevIndex + 1) % media.length);
+    };
 
-    // const handlePrevImage = () => {
-    //     setCurrentImageIndex((prevIndex) => (prevIndex - 1 + currentProduct.image.length) % currentProduct.image.length);
-    // };
+    const handlePrevMedia = () => {
+        setCurrentMediaIndex((prevIndex) => (prevIndex - 1 + media.length) % media.length);
+    };
 
-    const products = ["1", "2", "3"];
+    const products = ["1", "2"];
     const handleNextProduct = () => {
         const currentIndex = products.indexOf(currentProductId);
         const nextIndex = (currentIndex + 1) % products.length;
@@ -146,22 +152,22 @@ export default function ProductViewWrapper() {
                     }}
                 />
                 {/* Navigation Buttons */}
-                {/* {currentProduct.image.length > 1 && ( */}
+                {media.length > 1 && (
                     <>
-                        {/* <button
-                            onClick={handlePrevImage}
+                        <button
+                            onClick={handlePrevMedia}
                             className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-30 cursor-pointer hover:bg-opacity-30 hover:bg-white hover:text-gray-500 text-white px-2 py-1 font-bold rounded-full"
                         >
                             &lt;
                         </button>
                         <button
-                            onClick={handleNextImage}
+                            onClick={handleNextMedia}
                             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-500 bg-opacity-30 cursor-pointer hover:bg-opacity-30 hover:bg-white hover:text-gray-500 text-white px-2 py-1 font-bold rounded-full"
                         >
                             &gt;
-                        </button> */}
+                        </button>
                     </>
-                {/* )} */}
+                )}
             </div>
             {/* )} */}
 
@@ -284,7 +290,7 @@ export default function ProductViewWrapper() {
                 ))
             )};
 
-            {/* Previous and Next Product Buttons */}
+            {/* PREVIOUS AND NEXT PRODUCT BUTTON */}
             <div className="flex flex-row w-full">
                 <button
                     onClick={handlePrevProduct}
