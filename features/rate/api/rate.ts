@@ -6,7 +6,6 @@ export async function submitRating(ratingData: ratingRequestProps): Promise<void
     try {
         const response = await axiosInstance.post('/rating/add', ratingData);
         console.log('Rating saved:', response.data);
-        // Handle any success scenarios here if needed
     } catch (error) {
         if (error instanceof AxiosError) {
             const { response } = error;
