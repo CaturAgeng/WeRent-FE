@@ -21,8 +21,7 @@ export default function ProductViewWrapper() {
         product_desc: string,
         sizes: string[],
         price: number,
-        images? : any[],
-        videos?: string[],
+        images? : string[],
         rent_duration : number,
         ratings?: {
             userId: number; ratingValue: number 
@@ -40,10 +39,9 @@ export default function ProductViewWrapper() {
             try {
                 console.log('Fetching product data for productId:', currentProductId);
                 const { product } = await viewProductRequest(currentProductId);
-                const { product_name, product_desc, sizes, price, product_pictures, product_videos, rent_duration, ratings, reviews  } = product;
+                const { product_name, product_desc, sizes, price, product_pictures, rent_duration, ratings, reviews  } = product;
                 const images = product_pictures ? [product_pictures] : [];
-                const videos = product_videos || [];
-                setProductData({ product_name, product_desc, sizes, price, images, videos, rent_duration, ratings, reviews });
+                setProductData({ product_name, product_desc, sizes, price, images: product_pictures, rent_duration, ratings, reviews });
                 setLoadingImage(false);
             } catch (err: any) {
                 setError(err.message);
@@ -82,8 +80,7 @@ export default function ProductViewWrapper() {
         { label: 'Large', percentage: 13},
     ];
 
-    const media = [...(productData.images || []), ...(productData.videos || [])];
-    const isVideo = (url: string) => url.endsWith('.mp4') || url.endsWith('.webm');
+    const media = [...(productData.images || [])];
 
     // BUTTON HANDLER HERE
     const handleNextMedia = () => {
@@ -94,7 +91,7 @@ export default function ProductViewWrapper() {
         setCurrentMediaIndex((prevIndex) => (prevIndex - 1 + media.length) % media.length);
     };
 
-    const products = ["1", "2"];
+    const products = ["1", "2", "3"];
     const handleNextProduct = () => {
         const currentIndex = products.indexOf(currentProductId);
         const nextIndex = (currentIndex + 1) % products.length;
@@ -108,7 +105,7 @@ export default function ProductViewWrapper() {
     };
 
     const fallbackImage = '/dummy/no_image.png'
-    const imageUrl = productData.images ? productData.images[0] : fallbackImage;
+    const imageUrl = productData.images?.[currentMediaIndex] || fallbackImage;
 
     // CHANGE DATA FORMAT FROM BE TO FE
     const formattedPrice = productData.price.toLocaleString('id-ID', { 
