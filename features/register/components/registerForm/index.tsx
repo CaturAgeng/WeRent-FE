@@ -52,7 +52,7 @@ export function RegisterForm() {
       email: email!.toString(),
       password: password!.toString()
     }
-    console.log(payload)
+    // console.log(payload)
     
     mutate(payload)
   }
