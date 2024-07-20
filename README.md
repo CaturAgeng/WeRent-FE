@@ -2,7 +2,22 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+node requirement to run this project :
+node.js v21.5.0
+First, install the dependecies by:
+```bash
+npm install
+#or
+yarn install
+#or
+pnpm install
+#or
+bun install
+```
+
+Second, set .env by configuring base url
+
+third, run the development server:
 
 ```bash
 npm run dev
@@ -12,13 +27,14 @@ yarn dev
 pnpm dev
 # or
 bun dev
+# or to run different port from default user may run :
+PORT=3001 npm run dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000/product](http://localhost:3000/product) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This project also deployed on vercel : [https://we-rent-fe.vercel.app/](https://we-rent-fe.vercel.app/)
 
 ## Learn More
 
