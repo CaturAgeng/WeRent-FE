@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+node requirement to run this project :
+node.js v21.5.0
 First, install the dependecies by:
 ```bash
 npm install
@@ -25,9 +27,14 @@ yarn dev
 pnpm dev
 # or
 bun dev
+# or to run different port from default user may run :
+PORT=3001 npm run dev
+
 ```
 
 Open [http://localhost:3000/product](http://localhost:3000/product) with your browser to see the result.
+
+This project also deployed on vercel : [https://we-rent-fe.vercel.app/](https://we-rent-fe.vercel.app/)
 
 ## Learn More
 
