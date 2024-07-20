@@ -1,52 +1,102 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h2 align="" id="top">  WeRent Project </h2>
+WeRent is an application aimed at simplifying and improving the process of renting clothes. WeRent is designed for individuals looking to rent clothes, including young professionals, fashion students, social media influencers, event planners, and travelers. The platform caters to users who value transparency, reliability, and ease of use in the clothing rental process.
 
-## Getting Started
+### Problem Statement
 
-node requirement to run this project :
-node.js v21.5.0
-First, install the dependecies by:
-```bash
-npm install
-#or
-yarn install
-#or
-pnpm install
-#or
-bun install
-```
+WeRent addresses issues such as complex user flows, unreliable product quality, inaccurate product descriptions, and difficulties in assessing the condition of rental items.
 
-Second, set .env by configuring base url
+### :dart: Goals
 
-third, run the development server:
+By implementing a user-friendly review page, WeRent enhances transparency and user trust, allowing potential renters to make informed decisions based on the feedback and experiences of previous users.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-# or to run different port from default user may run :
-PORT=3001 npm run dev
+## :file_folder: Folder Structure
 
 ```
+|-- WeRent-FE/
+|   ├── api/
+|   ├── app/
+|   ├── assets/
+|   ├── config/
+|   ├── features/
+|   |       ├── add-product
+|   |       ├── base
+|   |       ├── home
+|   |       ├── login
+|   |       ├── product
+|   |       ├── rate
+|   |       ├── register
+|   |       ├── review
+|   |       └── index.ts
+|   ├── provider/
+|   └── public/
+|-- README.md
+```
 
-Open [http://localhost:3000/product](http://localhost:3000/product) with your browser to see the result.
+## Installation
 
-This project also deployed on vercel : [https://we-rent-fe.vercel.app/](https://we-rent-fe.vercel.app/)
+1. Clone the repository
 
-## Learn More
+```bash
+git clone <repository_url>
+```
 
-To learn more about Next.js, take a look at the following resources:
+2. Install Project Dependencies
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+$ npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## :checkered_flag: Usage/Examples
 
-## Deploy on Vercel
+### Running the App:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# development
+$ npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## :rocket: Features
+
+- Register
+- Login
+- Product
+- Image Slide View
+- Choose Size
+- Like
+- Choose Product
+- Rating
+- Review
+
+## :book: Documentation
+
+<h2 align="center"> Register</h2>
+
+![Resgister](public/assets/Register.png)
+
+<h2 align="center">Login</h2>
+
+![Resgister](public/assets/Login.png)
+
+<h2 align="center">Product</h2>
+
+![Resgister](public/assets/Product.png)
+
+<h2 align="center">Product</h2>
+
+![Resgister](public/assets/Product2.png)
+
+<h2 align="center">Rating</h2>
+
+![Resgister](public/assets/Rating.png)
+
+<h2 align="center">Review</h2>
+
+![Resgister](public/assets/Review.png)
+
+<h2 align="center">DEPLOYMENT</h2>
+
+### This Project has been deploy using Vercel: [WeRent App](https://we-rent-fe.vercel.app/)
+
+![WeRent App](public/assets/Deployment.png)
+
+<a href="#top">Back to top</a>
